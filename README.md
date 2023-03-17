@@ -2,7 +2,7 @@
 
 ## Pitch  
 
-> It’s 1963 and you just busted out of Alcatraz Prison! Only a two mile swim across the San Francisco Bay separates you from freedom, but the Coast Guard will arrive in 3 min! Be careful though, you could be spotted or run out of oxygen. Swim across the bay to land to win the game! 
+> It’s 1963 and you just busted out of Alcatraz Prison! Only a two mile swim across the San Francisco Bay separates you from freedom, but the Coast Guard will arrive in 30 min! Be careful though, you could be spotted or run out of oxygen. Swim across the bay to land to win the game! 
 
 ## Tech stack
 * HTML
