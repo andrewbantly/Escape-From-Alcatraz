@@ -1,20 +1,20 @@
 # Escape From Alcatraz
 
-__Pitch__ 
+## Pitch  
 
 > It’s 1963 and you just busted out of Alcatraz Prison! Only a two mile swim across the San Francisco Bay separates you from freedom, but the Coast Guard will arrive in 3 min! Be careful though, you could be spotted or run out of oxygen. Swim across the bay to land to win the game! 
 
-__Tech stack__
+## Tech stack
 * HTML
 * CSS
 * JavaScript (canvas)
 
-__Wireframe__ 
+## Wireframe
 
 ![Wireframe](./Wireframe_%20Escape-From-Alcatraz%202023-03-16.jpg)
 
 
-__MVP Goals__ 
+## MVP Goals
 
 HTML 
 * Game objective, instructions, and flow are clear
@@ -33,7 +33,7 @@ JavaScript
 * Use of canva
 * Response for game win/loss & reset 
 
-__Stretch Goals__ 
+## Stretch Goals
 
 HTML
 * Linked and functional multimedia (music, photo, SFX, etc)
