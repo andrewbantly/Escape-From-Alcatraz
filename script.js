@@ -38,18 +38,35 @@ class EscapeGame {
             }
             // OBSTACLE MOVEMENT 
                 obstacleMovement () {
-                    const obstacleDistance = 20;
+                    let i = 0;
+                    const obstacleDistance = 10;
                     let randomDirection = Math.floor(Math.random() * 4);
-                    // console.log(randomDirection);
-                    if (randomDirection === 0 && this.x >= 0) {
-                        this.x -= obstacleDistance;
+                    if (randomDirection === 0 && this.x >= 0) {  
+                        // console.log(this.x);
+                        let moveLeftX = this.x; //created a variable so the below console.log doesn't return "NaN"
+                       function moveLeft() {
+                            moveLeftX -= obstacleDistance;
+                            i++;
+                            console.log(i, moveLeftX);
+                            if (i >= 10) {
+                              clearInterval(movementLoop);
+                              i = 0;
+                            }
+                            return moveLeftX; //this isn't working properly (only returning one value)
+                        }  
+                        console.log(`Move x to: ${moveLeftX}`);
+                    let movementLoop = setInterval(moveLeft, 100);
+                    // this.x = `${moveLeftX}px`;
+
+
+
                     } else if (randomDirection === 1  && this.x <= integerCanvasX) {
                         this.x += obstacleDistance;
                     } else if (randomDirection === 2 && this.y >= 0) {
                         this.y -= obstacleDistance;
-                    } else if (randomDirection === 3 && this.y <= integerCanvasY)
+                    } else if (randomDirection === 3 && this.y <= integerCanvasY) {
                         this.y += obstacleDistance;
-                    else {
+                    } else {
                     }
                 };
                 
@@ -81,7 +98,12 @@ police2.obstacleMovement();
 police3.obstacleMovement();
 }
 // Loop for obstacle movement
-let searchLoop = setInterval(fugativeSearch, 350);
+let searchLoop = setInterval(fugativeSearch, 1000);
+
+
+
+
+
 
 // HUMAN KEYBOARD CONTROLS 
 function keyPressEvent(e) {
