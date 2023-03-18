@@ -3,20 +3,12 @@ const gameStatus = document.querySelector("#gameStatus");
 const gameDistance = document.querySelector("#distance");
 const gameCanvas = document.querySelector("#canvas");
 const gameReset = document.querySelector("#gameReset");
-// console.log(gameStatus, gameDistance, gameCanvas, gameReset);
 
 // CANVAS SETUP
 const ctx = gameCanvas.getContext("2d");
-// console.log(ctx)
-// Ask the Dom what size the canvas actually is in pixels
-// set canvas resolution to be that size 
 gameCanvas.setAttribute("height", getComputedStyle(canvas).height);
 gameCanvas.setAttribute("width", getComputedStyle(canvas).width);
-console.log()
 console.log(`canvas width: ${(canvas).width} canvas height: ${(canvas).height}`);
-
-// set render properties 
-// invoke renderer methods 
 
 class Escape {
     constructor(x, y, width, height, color) {
@@ -35,16 +27,18 @@ class Escape {
 }
 
 // GAME OBJECTS
-let canvasWidth = (getComputedStyle(canvas).width);
-let canvasHeight = (getComputedStyle(canvas).height);
-const fugative = new Escape(10, 300, 50, 50, "beige");
-const police1 = new Escape(350, 200, 75, 100, "blue");
-const police2 = new Escape(800, 150, 75, 100, "red");
-const police3 = new Escape(550, 400, 75, 100, "orange");
+const canvasWidth = (getComputedStyle(canvas).width);
+const canvasHeight = (getComputedStyle(canvas).height);
+let integerCanvasX = parseInt(canvasWidth);
+let integerCanvasY = parseInt(canvasHeight);
+// console.log(`Fugative starting x: ${middleCanvasX} starting y: ${middleCanvasY}`)
+const fugative = new Escape(10, (integerCanvasY / 2), 50, 20, "beige");
+const police1 = new Escape((integerCanvasX / 4), (integerCanvasY / 3), 75, 100, "blue");
+const police2 = new Escape((integerCanvasX / 2), (integerCanvasY - (integerCanvasY / 4)), 75, 100, "orange");
+const police3 = new Escape((integerCanvasX - (integerCanvasX / 5)), (integerCanvasY / 5), 75, 100, "red");
 
 // RENDER REFRESH
 const gameLoopInterval = setInterval (gameLoop, 50);
-
 
 // OBSTACLE MOVEMENT 
 function obstacleMovement () {
