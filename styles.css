@@ -1,6 +1,14 @@
 body {
     background-color: lightblue;
+    margin: 0;
 }
+/* .backgroundImage {
+    position: absolute;
+    width: 100%;
+    margin: 0;
+    top: 0;
+    left: 0;
+} */
 
 header {
     width: 90%;
@@ -8,6 +16,7 @@ header {
     display: flex;
     border: 3px solid gray;
     justify-content: space-between;
+    color: whitesmoke;
 }
 .gameTitle {
     position: relative;
@@ -36,15 +45,21 @@ main {
     position: relative;
 }
 canvas {
-    background-color: rgb(212, 226, 14);
+    /* background-color: rgb(212, 226, 14); */
     /* why does the canvas not fill the entire height? */
     width: 100%;
+    /* background-image: url(./media/DSC08588.jpg);
+    background-position: -300px 0px; */
+    /* background-size: cover; */
 }
 footer {
     margin: 2vh auto;
     width: 90%;
     display: flex;
     flex-direction: row-reverse;
+}
+.gameReset {
+    position: fixed;
 }
 
 
