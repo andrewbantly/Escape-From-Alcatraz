@@ -10,7 +10,7 @@ gameCanvas.setAttribute("height", getComputedStyle(canvas).height);
 gameCanvas.setAttribute("width", getComputedStyle(canvas).width);
 console.log(`canvas width: ${(canvas).width} canvas height: ${(canvas).height}`);
 
-class Escape {
+class EscapeGame {
     constructor(x, y, width, height, color, hero) {
         this.x = x;
         this.y = y;
@@ -19,7 +19,7 @@ class Escape {
         this.color = color;
         this.hero = hero;
         this.atLarge = true;
-        // ADD Enemy class to define obstacles? 
+        // ADD obstacle.type object literal to define obstacles characteristics? 
     }
     // COLLISION DETECTION FUNCTION FOR ALL OBSTACLES
         detectHit () {
@@ -28,7 +28,7 @@ class Escape {
             const top = this.y <= fugative.y + fugative.height;
             const bottom = this.y + this.height >= fugative.y;
             if (left && top && bottom && right) {
-                console.log(`The fugative was caught by ${this.color}`)
+                console.log(`The fugative was caught by the ${this.color} police.`)
                 fugative.atLarge = false;
                 clearInterval(gameLoopInterval);
                 return true;
@@ -36,7 +36,23 @@ class Escape {
                 return false;
             }
             }
-
+            // OBSTACLE MOVEMENT 
+                obstacleMovement () {
+                    const obstacleDistance = 20;
+                    let randomDirection = Math.floor(Math.random() * 4);
+                    // console.log(randomDirection);
+                    if (randomDirection === 0 && this.x >= 0) {
+                        this.x -= obstacleDistance;
+                    } else if (randomDirection === 1  && this.x <= integerCanvasX) {
+                        this.x += obstacleDistance;
+                    } else if (randomDirection === 2 && this.y >= 0) {
+                        this.y -= obstacleDistance;
+                    } else if (randomDirection === 3 && this.y <= integerCanvasY)
+                        this.y += obstacleDistance;
+                    else {
+                    }
+                };
+                
     render() {
         ctx.fillStyle = this.color;
         ctx.fillRect(this.x, this.y, this.width, this.height)
@@ -46,84 +62,68 @@ class Escape {
 // GAME OBJECTS
 const canvasWidth = (getComputedStyle(canvas).width);
 const canvasHeight = (getComputedStyle(canvas).height);
+// Parse pixels into integers
 let integerCanvasX = parseInt(canvasWidth);
 let integerCanvasY = parseInt(canvasHeight);
-// console.log(`Fugative starting x: ${middleCanvasX} starting y: ${middleCanvasY}`)
-const fugative = new Escape(10, (integerCanvasY / 2), 50, 20, "beige", true);
-const police1 = new Escape((integerCanvasX / 4), (integerCanvasY / 3), 75, 100, "blue", false);
-const police2 = new Escape((integerCanvasX / 2), (integerCanvasY - (integerCanvasY / 4)), 75, 100, "orange", false);
-const police3 = new Escape((integerCanvasX - (integerCanvasX / 5)), (integerCanvasY / 5), 75, 100, "red", false);
+// Use math to ensure starting points of objects are relative to screen size
+const fugative = new EscapeGame(10, (integerCanvasY / 2), 50, 20, "beige", true);
+const police1 = new EscapeGame((integerCanvasX / 4), (integerCanvasY / 3), 75, 100, "blue", false);
+const police2 = new EscapeGame((integerCanvasX / 2), (integerCanvasY - (integerCanvasY / 4)), 75, 100, "orange", false);
+const police3 = new EscapeGame((integerCanvasX - (integerCanvasX / 5)), (integerCanvasY / 5), 75, 100, "red", false);
 
 // RENDER REFRESH
 const gameLoopInterval = setInterval (gameLoop, 50);
 
-// OBSTACLE MOVEMENT 
-function obstacleMovement () {
-    const obstacleDistance = 40;
-    let randomDirection = Math.floor(Math.random() * (4));
-    // console.log(randomDirection);
-    if (randomDirection === 0) {
-        police1.x -= obstacleDistance;
-        police2.y += obstacleDistance;
-        police3.x -= obstacleDistance;
-    } else if (randomDirection === 1) {
-        police1.x += obstacleDistance;
-        police2.x -= obstacleDistance;
-        police3.y -= obstacleDistance;
-    } else if (randomDirection === 2) {
-        police1.y -= obstacleDistance;
-        police2.x += obstacleDistance;
-        police3.y += obstacleDistance;
-    } else {
-        police1.y += obstacleDistance;
-        police2.y -= obstacleDistance;
-        police3.x += obstacleDistance;
-        }
-    }
-let policeSearch = setInterval(obstacleMovement, 350);
+// OBSTACLE MOVEMENT FUNCTION
+function fugativeSearch () {
+police1.obstacleMovement();
+police2.obstacleMovement();
+police3.obstacleMovement();
+}
+// Loop for obstacle movement
+let searchLoop = setInterval(fugativeSearch, 350);
 
 // HUMAN KEYBOARD CONTROLS 
 function keyPressEvent(e) {
     const distance = 4;
     // console.log(e);  
+    // Keys should only be functional if fugative is within canvas bounds
     switch(e.key) {
         case "w":
             case "ArrowUp":
-            fugative.y -= distance;
-                break
+                if (fugative.y >= 0) {
+                    fugative.y -= distance;
+                 } break
             case "s":
             case "ArrowDown": 
-            fugative.y += distance;
-                break
+                if (fugative.y <= integerCanvasY) {
+                    fugative.y += distance;
+                 } break
             case "a":
             case "ArrowLeft":
-            fugative.x -= distance;
-                break
+                if (fugative.x >= 0) {
+                    fugative.x -= distance;
+                } break
             case "d":
             case "ArrowRight":
-            fugative.x += distance;
-                break;
+                if (fugative.x <= integerCanvasX) {
+                     fugative.x += distance;
+                } break;
             }
     gameStatus.innerText = `distance remaing: ${(canvas).width - fugative.x}`;
     }
 
 document.addEventListener("keydown", keyPressEvent);
-                            
+
 // GAME FUNCTION
 function gameLoop () {
     // clear the renderer
-    ctx.clearRect(0, 0, canvas.width, canvas.height);    
+    ctx.clearRect(0, 0, canvas.width, canvas.height);  
     // logic of the game
     // check for collision
-    police1.detectHit()
-    police2.detectHit()
-    police3.detectHit()
-    // if (detectHit()) {
-    //     console.log("Collision detected. End the game.");
-    //     fugative.atLarge = false;
-    //     gameStatus.innerText = "You've been caught by the police";
-    //     clearInterval(gameLoopInterval);
-    // }
+    police1.detectHit();
+    police2.detectHit();
+    police3.detectHit();
     if (fugative.atLarge === true) {
         fugative.render();
         police1.render();
