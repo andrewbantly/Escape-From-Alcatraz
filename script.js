@@ -5,7 +5,6 @@ const gameCanvas = document.querySelector("#canvas");
 const gameReset = document.querySelector("#gameReset");
 // console.log(gameStatus, gameDistance, gameCanvas, gameReset);
 
-
 // CANVAS SETUP
 const ctx = gameCanvas.getContext("2d");
 // console.log(ctx)
@@ -13,7 +12,8 @@ const ctx = gameCanvas.getContext("2d");
 // set canvas resolution to be that size 
 gameCanvas.setAttribute("height", getComputedStyle(canvas).height);
 gameCanvas.setAttribute("width", getComputedStyle(canvas).width);
-console.log(`height: ${(canvas).height} width: ${(canvas).width}`);
+console.log()
+console.log(`canvas width: ${(canvas).width} canvas height: ${(canvas).height}`);
 
 // set render properties 
 // invoke renderer methods 
@@ -35,18 +35,46 @@ class Escape {
 }
 
 // GAME OBJECTS
-let centerWidth = (getComputedStyle(canvas).width / 2);
-let centerHeight = (getComputedStyle(canvas).height / 2);
-const fugative = new Escape(550, 480, 50, 50, "beige");
-const police = new Escape(350, 300, 75, 100, "blue");
+let canvasWidth = (getComputedStyle(canvas).width);
+let canvasHeight = (getComputedStyle(canvas).height);
+const fugative = new Escape(10, 300, 50, 50, "beige");
+const police1 = new Escape(350, 200, 75, 100, "blue");
+const police2 = new Escape(800, 150, 75, 100, "red");
+const police3 = new Escape(550, 400, 75, 100, "orange");
 
 // RENDER REFRESH
 const gameLoopInterval = setInterval (gameLoop, 50);
 
+
+// OBSTACLE MOVEMENT 
+function obstacleMovement () {
+    const obstacleDistance = 40;
+    let randomDirection = Math.floor(Math.random() * (4));
+    // console.log(randomDirection);
+    if (randomDirection === 0) {
+        police1.x -= obstacleDistance;
+        police2.y += obstacleDistance;
+        police3.x -= obstacleDistance;
+    } else if (randomDirection === 1) {
+        police1.x += obstacleDistance;
+        police2.x -= obstacleDistance;
+        police3.y -= obstacleDistance;
+    } else if (randomDirection === 2) {
+        police1.y -= obstacleDistance;
+        police2.x += obstacleDistance;
+        police3.y += obstacleDistance;
+    } else {
+        police1.y += obstacleDistance;
+        police2.y -= obstacleDistance;
+        police3.x += obstacleDistance;
+        }
+    }
+let policeSearch = setInterval(obstacleMovement, 350);
+
 // HUMAN KEYBOARD CONTROLS 
 function keyPressEvent(e) {
-    const distance = 5;
-    console.log(e);  
+    const distance = 4;
+    // console.log(e);  
     switch(e.key) {
         case "w":
             case "ArrowUp":
@@ -65,17 +93,17 @@ function keyPressEvent(e) {
             fugative.x += distance;
                 break;
             }
-    gameStatus.innerText = `distance remaing: ${1470 + fugative.y}`;
+    gameStatus.innerText = `distance remaing: ${(canvas).width - fugative.x}`;
     }
 
 document.addEventListener("keydown", keyPressEvent);
                             
 // COLLISION DETECTION FUNCTION
 function detectHit () {
-    const left = police.x <= fugative.width + fugative.x;
-    const right = police.x + police.width >= fugative.x;
-    const top = police.y <= fugative.y + fugative.height;
-    const bottom = police.y + police.height >= fugative.y;
+    const left = police1.x <= fugative.width + fugative.x;
+    const right = police1.x + police1.width >= fugative.x;
+    const top = police1.y <= fugative.y + fugative.height;
+    const bottom = police1.y + police1.height >= fugative.y;
     if (left && top && bottom && right) {
         return true;
     } else {
@@ -98,23 +126,8 @@ function gameLoop () {
     }
     if (fugative.alive) {
         fugative.render();
-        police.render();
+        police1.render();
+        police2.render();
+        police3.render();
     }
 }
-
-// BACKGROUND
-
-// const canvasBg = document.querySelector("#canvasBg");
-// console.log(canvasBg.src)
-// function bgAni () {
-    //     canvasBg.src = "/Users/andrew/seir-306/unit1/Escape-From-Alcatraz/media/Water.jpg"
-    //     canvasBg.x = 0;
-    //     canvasBg.y = 0; 
-    //     canvasBg.render = function () {
-        //         ctx.drawImage(canvasBg, 0, canvasBg.y--);
-//         if(canvasBg.y <= -499) {
-//             canvasBg.y = 0;
-//         }
-//     }
-// }
-//     bgAni.render();

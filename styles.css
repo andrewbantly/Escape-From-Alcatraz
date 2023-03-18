@@ -48,9 +48,13 @@ canvas {
     /* background-color: rgb(212, 226, 14); */
     /* why does the canvas not fill the entire height? */
     width: 100%;
-    /* background-image: url(./media/DSC08588.jpg);
-    background-position: -300px 0px; */
-    /* background-size: cover; */
+    background-image: url(./media/Water.jpg);
+    background-position: -300px 0px;
+    background-size: cover;
+}
+.canvasBg {
+    width: 100%;
+    height: 100%;
 }
 footer {
     margin: 2vh auto;
