@@ -11,15 +11,32 @@ gameCanvas.setAttribute("width", getComputedStyle(canvas).width);
 console.log(`canvas width: ${(canvas).width} canvas height: ${(canvas).height}`);
 
 class Escape {
-    constructor(x, y, width, height, color) {
+    constructor(x, y, width, height, color, hero) {
         this.x = x;
         this.y = y;
         this.width = width;
         this.height = height;
         this.color = color;
-        this.alive = true;
+        this.hero = hero;
+        this.atLarge = true;
         // ADD Enemy class to define obstacles? 
     }
+    // COLLISION DETECTION FUNCTION FOR ALL OBSTACLES
+        detectHit () {
+            const left = this.x <= fugative.width + fugative.x;
+            const right = this.x + this.width >= fugative.x;
+            const top = this.y <= fugative.y + fugative.height;
+            const bottom = this.y + this.height >= fugative.y;
+            if (left && top && bottom && right) {
+                console.log(`The fugative was caught by ${this.color}`)
+                fugative.atLarge = false;
+                clearInterval(gameLoopInterval);
+                return true;
+            } else {
+                return false;
+            }
+            }
+
     render() {
         ctx.fillStyle = this.color;
         ctx.fillRect(this.x, this.y, this.width, this.height)
@@ -32,10 +49,10 @@ const canvasHeight = (getComputedStyle(canvas).height);
 let integerCanvasX = parseInt(canvasWidth);
 let integerCanvasY = parseInt(canvasHeight);
 // console.log(`Fugative starting x: ${middleCanvasX} starting y: ${middleCanvasY}`)
-const fugative = new Escape(10, (integerCanvasY / 2), 50, 20, "beige");
-const police1 = new Escape((integerCanvasX / 4), (integerCanvasY / 3), 75, 100, "blue");
-const police2 = new Escape((integerCanvasX / 2), (integerCanvasY - (integerCanvasY / 4)), 75, 100, "orange");
-const police3 = new Escape((integerCanvasX - (integerCanvasX / 5)), (integerCanvasY / 5), 75, 100, "red");
+const fugative = new Escape(10, (integerCanvasY / 2), 50, 20, "beige", true);
+const police1 = new Escape((integerCanvasX / 4), (integerCanvasY / 3), 75, 100, "blue", false);
+const police2 = new Escape((integerCanvasX / 2), (integerCanvasY - (integerCanvasY / 4)), 75, 100, "orange", false);
+const police3 = new Escape((integerCanvasX - (integerCanvasX / 5)), (integerCanvasY / 5), 75, 100, "red", false);
 
 // RENDER REFRESH
 const gameLoopInterval = setInterval (gameLoop, 50);
@@ -92,36 +109,28 @@ function keyPressEvent(e) {
 
 document.addEventListener("keydown", keyPressEvent);
                             
-// COLLISION DETECTION FUNCTION
-function detectHit () {
-    const left = police1.x <= fugative.width + fugative.x;
-    const right = police1.x + police1.width >= fugative.x;
-    const top = police1.y <= fugative.y + fugative.height;
-    const bottom = police1.y + police1.height >= fugative.y;
-    if (left && top && bottom && right) {
-        return true;
-    } else {
-        return false;
-}
-
-}
-
 // GAME FUNCTION
 function gameLoop () {
     // clear the renderer
     ctx.clearRect(0, 0, canvas.width, canvas.height);    
     // logic of the game
     // check for collision
-    if (detectHit()) {
-        console.log("Collision detected. End the game.");
-        fugative.alive = false;
-        gameStatus.innerText = "You've been caught by the police";
-        clearInterval(gameLoopInterval);
-    }
-    if (fugative.alive) {
+    police1.detectHit()
+    police2.detectHit()
+    police3.detectHit()
+    // if (detectHit()) {
+    //     console.log("Collision detected. End the game.");
+    //     fugative.atLarge = false;
+    //     gameStatus.innerText = "You've been caught by the police";
+    //     clearInterval(gameLoopInterval);
+    // }
+    if (fugative.atLarge === true) {
         fugative.render();
         police1.render();
         police2.render();
         police3.render();
-    }
-}
+    } else {
+        gameStatus.innerText = "You've been caught by the police";
+        document.removeEventListener("keydown", keyPressEvent);
+        console.log("Code here to switch to game reset");
+}}
