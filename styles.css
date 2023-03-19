@@ -1,70 +1,140 @@
 body {
-    background-color: lightblue;
+    background-color: rgb(67, 67, 67);
     margin: 0;
-}
-/* .backgroundImage {
-    position: absolute;
-    width: 100%;
-    margin: 0;
-    top: 0;
-    left: 0;
-} */
-
-header {
+    font-family: 'Stardos Stencil', cursive, sans-serif;
+    object-fit: cover;
+    overflow: hidden;
+    color: rgb(255, 250, 243);
+} 
+.homeHeader {
     width: 90%;
+    height: 10vh;
     margin: 2vh auto;
     display: flex;
-    border: 3px solid gray;
-    justify-content: space-between;
+}
+.homeHeader {
+    justify-content: center;
+}
+h1 {
+    text-align: center;
+    font-size: 5rem;
+    position: relative;
+    margin: 0 auto 5vh;
+    padding: 0;
+}
+.gameHeader {
+    width: 90%;
+    height: 10vh;
+    margin: 2vh auto 0;
+    display: flex;
     color: whitesmoke;
+    justify-content: space-between;
+}
+.goHome {
+    text-decoration: none;
+    color: rgb(255, 250, 243);
 }
 .gameTitle {
-    position: relative;
-    border: 3px solid orange;
-    display: flex;
-    align-items: center;
+    margin: 0;
 }
-.gameStatus {
-    position: relative;
-    border: 3px solid greenyellow;
-    display: flex;
-    align-items: center;
-    flex-direction: column;
+.Instructions {
+    padding: 0;
+    margin: 0;
+    height: 30%;
+}
+.gameStatusContainer {
+    padding: 0;
+}
+.distance {
+    margin: 0;
+    height: 30%;
+    font-size: 1.5rem;
+}
+.gameStatusData {
+    margin: 0;
+    height: 30%;
+    font-size: 1.5rem;
+    text-align: end;
+}
+section {
+    width: 90%;
+    margin: -3vh auto 1vh;
+}
+section > p {
+    margin: 0;
+    font-size: 1.2rem;
 }
 main {
     border: 3px solid rgb(2, 45, 5);
     width: 90%;
-    height: 70%;
+    height: 70vh;
     margin: 0 auto;
     display: flex;
+    overflow: hidden;
 }
 .gameContainer {
-    /* background-color: rgb(14, 67, 202); */
-    height: 100%;
     width: 100%;
     position: relative;
+    justify-content: center;
+    border: 3px solid burlywood;
 }
 canvas {
-    /* background-color: rgb(212, 226, 14); */
-    /* why does the canvas not fill the entire height? */
-    position: fixed;
+    position: relative;
     width: 100%;
     background-image: url(./media/Water.jpg);
-    background-position: -300px 0px;
     background-size: cover;
 }
-.canvasBg {
+.alcatrazImage {
+    max-width: 100%;
+    position: absolute;
+}
+.gameMenu {
     width: 100%;
-    height: 100%;
+    top: 0%;
+    margin: 0 auto;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+.gameObjectiveDiv {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+.gameObjective {
+    display: block;
+    position: relative;
+    width: 80%;
+    font-size: 1.3rem;
+    text-align: center;
+    margin: 5vh auto 0;
+}
+.startButton, .gameReset {
+    position: relative;
+    margin: 3vh auto 0;
+    width: 8rem;
+    height: 4rem;
+    font-size: 1rem;
+    background-color: gray;    
+    font-family: 'Stardos Stencil', cursive, sans-serif;
+}
+.startButton {
+    margin-top: 25vh;
+}
+.startButton:hover, .gameReset:hover {
+    cursor: pointer;
 }
 footer {
     margin: 2vh auto;
     width: 90%;
     display: flex;
     flex-direction: row-reverse;
+    position: relative;
 }
 .gameReset {
-    position: fixed;
+    position: relative;
+    margin: 0;
 }
 
 

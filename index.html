@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,29 +7,30 @@
     <title>Escape From Alcatraz</title>
     <link rel="stylesheet" href="./styles.css" >
     <script defer src="./script.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Stardos+Stencil:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
-<!-- <img class="backgroundImage" src="./media/DSC08588.jpg"> -->
-    <header>
-        <div class="gameTitle" id="gameTitle">
-            <h2>Escape From Alcatraz</h2>
+    <header class="gameHeader">
+        <div>
+        <a class="goHome" href="./home.html"><h2 class="gameTitle">Escape From Alcatraz</h2></a>
+        <p class="Instructions">Use your arrow keys to swim cross the San Francisco Bay!</p>
         </div>
-        <div class="gameStatus" id="gameStatus">
-            <h2>Game Status</h2>
-            <aside><h2 id="distance">Distance: </h2></aside>
+        <div class="gameStatusContainer" id="gameStatus">
+            <h2 id="gameStatusHeader" class="distance">Distance remaining:</h2>
+            <h5 class ="gameStatusData" id="distance"></h5>
         </div>
     </header>
     <main>
         <div class="gameContainer" id="gameContainer">
-            <button class="startButton" id="startButton">Start game</button>
             <canvas id="canvas">
-                <!-- <img class="canvasBg" id="canvasBg" src="./media/Water.jpg"> -->
             </canvas>
         </div>
     </main>
     <footer>
-        <aside class="gameReset" id="gameReset">
-            <button>Reset Game</button>
+        <aside id="gameReset">
+            <button class="gameReset">Reset Game</button>
         </aside>
     </footer>
 </body>
