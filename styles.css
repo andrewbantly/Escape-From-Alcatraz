@@ -47,6 +47,7 @@ main {
 canvas {
     /* background-color: rgb(212, 226, 14); */
     /* why does the canvas not fill the entire height? */
+    position: fixed;
     width: 100%;
     background-image: url(./media/Water.jpg);
     background-position: -300px 0px;

@@ -1,3 +1,4 @@
+let gameOn = null;
 // DOM SELECTORS
 const gameStatus = document.querySelector("#gameStatus");
 const gameDistance = document.querySelector("#distance");
@@ -37,34 +38,18 @@ class EscapeGame {
             }
             }
             // OBSTACLE MOVEMENT 
-                obstacleMovement () {
+               // 
+            obstacleMovement () {
                     let i = 0;
                     const obstacleDistance = 10;
                     let randomDirection = Math.floor(Math.random() * 4);
-                    if (randomDirection === 0 && this.x >= 0) {  
-                        // console.log(this.x);
-                        let moveLeftX = this.x; //created a variable so the below console.log doesn't return "NaN"
-                       function moveLeft() {
-                            moveLeftX -= obstacleDistance;
-                            i++;
-                            console.log(i, moveLeftX);
-                            if (i >= 10) {
-                              clearInterval(movementLoop);
-                              i = 0;
-                            }
-                            return moveLeftX; //this isn't working properly (only returning one value)
-                        }  
-                        console.log(`Move x to: ${moveLeftX}`);
-                    let movementLoop = setInterval(moveLeft, 100);
-                    // this.x = `${moveLeftX}px`;
-
-
-
-                    } else if (randomDirection === 1  && this.x <= integerCanvasX) {
+                    if (randomDirection === 0 && this.x >= this.width) {  
+                        this.x -= obstacleDistance;
+                    } else if (randomDirection === 1  && this.x <= gameCanvas.width - this.width) {
                         this.x += obstacleDistance;
-                    } else if (randomDirection === 2 && this.y >= 0) {
+                    } else if (randomDirection === 2 && this.y >= this.height) {
                         this.y -= obstacleDistance;
-                    } else if (randomDirection === 3 && this.y <= integerCanvasY) {
+                    } else if (randomDirection === 3 && this.y <= gameCanvas.height - this.height) {
                         this.y += obstacleDistance;
                     } else {
                     }
@@ -79,14 +64,11 @@ class EscapeGame {
 // GAME OBJECTS
 const canvasWidth = (getComputedStyle(canvas).width);
 const canvasHeight = (getComputedStyle(canvas).height);
-// Parse pixels into integers
-let integerCanvasX = parseInt(canvasWidth);
-let integerCanvasY = parseInt(canvasHeight);
 // Use math to ensure starting points of objects are relative to screen size
-const fugative = new EscapeGame(10, (integerCanvasY / 2), 50, 20, "beige", true);
-const police1 = new EscapeGame((integerCanvasX / 4), (integerCanvasY / 3), 75, 100, "blue", false);
-const police2 = new EscapeGame((integerCanvasX / 2), (integerCanvasY - (integerCanvasY / 4)), 75, 100, "orange", false);
-const police3 = new EscapeGame((integerCanvasX - (integerCanvasX / 5)), (integerCanvasY / 5), 75, 100, "red", false);
+const fugative = new EscapeGame(10, (gameCanvas.height / 2), 50, 20, "beige", true);
+const police1 = new EscapeGame((gameCanvas.width / 4), (gameCanvas.height / 3), 75, 100, "blue", false);
+const police2 = new EscapeGame((gameCanvas.width / 2), (gameCanvas.height - (gameCanvas.height / 4)), 75, 100, "orange", false);
+const police3 = new EscapeGame((gameCanvas.width - (gameCanvas.width / 5)), (gameCanvas.height / 5), 75, 100, "red", false);
 
 // RENDER REFRESH
 const gameLoopInterval = setInterval (gameLoop, 50);
@@ -100,13 +82,9 @@ police3.obstacleMovement();
 // Loop for obstacle movement
 let searchLoop = setInterval(fugativeSearch, 1000);
 
-
-
-
-
-
 // HUMAN KEYBOARD CONTROLS 
 function keyPressEvent(e) {
+    if (gameOn === true) {
     const distance = 4;
     // console.log(e);  
     // Keys should only be functional if fugative is within canvas bounds
@@ -118,7 +96,7 @@ function keyPressEvent(e) {
                  } break
             case "s":
             case "ArrowDown": 
-                if (fugative.y <= integerCanvasY) {
+                if (fugative.y <= gameCanvas.height - fugative.height) {
                     fugative.y += distance;
                  } break
             case "a":
@@ -128,18 +106,23 @@ function keyPressEvent(e) {
                 } break
             case "d":
             case "ArrowRight":
-                if (fugative.x <= integerCanvasX) {
+                if (fugative.x <= gameCanvas.width - fugative.width) {
                      fugative.x += distance;
                 } break;
             }
     gameStatus.innerText = `distance remaing: ${(canvas).width - fugative.x}`;
-    }
+    console.log(`fugative x: ${fugative.x} y: ${fugative.y}`)
+    } 
+    // gameOn === false code here
+}
 
 document.addEventListener("keydown", keyPressEvent);
+
 
 // GAME FUNCTION
 function gameLoop () {
     // clear the renderer
+    if (gameOn === true) {
     ctx.clearRect(0, 0, canvas.width, canvas.height);  
     // logic of the game
     // check for collision
@@ -155,4 +138,8 @@ function gameLoop () {
         gameStatus.innerText = "You've been caught by the police";
         document.removeEventListener("keydown", keyPressEvent);
         console.log("Code here to switch to game reset");
-}}
+    } 
+    // gameOn === false here
+    }
+}   
+
