@@ -65,12 +65,12 @@ section > p {
     font-size: 1.2rem;
 }
 main {
-    border: 3px solid rgb(2, 45, 5);
     width: 90%;
     height: 70vh;
     margin: 0 auto;
     display: flex;
     overflow: hidden;
+    flex-wrap: wrap;
 }
 .gameContainer {
     width: 100%;
@@ -83,6 +83,7 @@ canvas {
     width: 100%;
     background-image: url(./media/Water.jpg);
     background-size: cover;
+    border: 3px solid lightgray;
 }
 .alcatrazImage {
     max-width: 100%;
@@ -110,13 +111,20 @@ canvas {
     text-align: center;
     margin: 5vh auto 0;
 }
+.gameFooter {
+    margin: 2vh auto;
+    width:100%;
+    display: flex;
+    position: relative;
+    justify-content: space-between;
+}
 .startButton, .gameReset {
     position: relative;
-    margin: 3vh auto 0;
     width: 8rem;
     height: 4rem;
     font-size: 1rem;
-    background-color: gray;    
+    background-color: gray;
+    color: rgb(255, 250, 243); 
     font-family: 'Stardos Stencil', cursive, sans-serif;
 }
 .startButton {
@@ -125,16 +133,18 @@ canvas {
 .startButton:hover, .gameReset:hover {
     cursor: pointer;
 }
-footer {
-    margin: 2vh auto;
-    width: 90%;
-    display: flex;
-    flex-direction: row-reverse;
-    position: relative;
-}
 .gameReset {
     position: relative;
     margin: 0;
+}
+.gameCommentary {
+    border: 3px solid lightgray;
+    font-size: 1.3rem;
+    margin: 0;
+    padding: 1rem 0.9rem;
+    height: 2rem;
+    text-align: center;
+    font-style: italic;
 }
 
 
