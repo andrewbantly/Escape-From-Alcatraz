@@ -58,9 +58,9 @@ class EscapeGame {
                     let i = 0;
                     const obstacleDistance = 10;
                     let randomDirection = Math.floor(Math.random() * 4);
-                    if (randomDirection === 0 && this.x >= this.width) {  
+                    if (randomDirection === 0 && this.x > 100) {  
                         this.x -= obstacleDistance;
-                    } else if (randomDirection === 1  && this.x <= gameCanvas.width - this.width) {
+                    } else if (randomDirection === 1  && this.x <= (gameCanvas.width - 100)- this.width) {
                         this.x += obstacleDistance;
                     } else if (randomDirection === 2 && this.y >= this.height) {
                         this.y -= obstacleDistance;
@@ -83,7 +83,8 @@ const canvasHeight = (getComputedStyle(canvas).height);
 let fugative = new EscapeGame(100, (gameCanvas.height / 2), 50, 20, "beige", true);
 let alcatraz = new EscapeGame(0, 0, 100, (gameCanvas.height), "black", false);
 let freeLand = new EscapeGame ((gameCanvas.width - 100), 0, 100, (gameCanvas.height), "yellow", false)
-let police1 = new EscapeGame((gameCanvas.width / 4), (gameCanvas.height / 3), 75, 100, "blue", false);
+let police1 = new EscapeGame(120, 30, 75, 100, "blue", false);
+// let police1 = new EscapeGame((gameCanvas.width / 4), (gameCanvas.height / 3), 75, 100, "blue", false);
 let police2 = new EscapeGame((gameCanvas.width / 2), (gameCanvas.height - (gameCanvas.height / 4)), 75, 100, "orange", false);
 let police3 = new EscapeGame((gameCanvas.width - (gameCanvas.width / 5)), (gameCanvas.height / 5), 75, 100, "red", false);
 
@@ -117,12 +118,12 @@ function keyPressEvent(e) {
                  } break
             case "a":
             case "ArrowLeft":
-                if (fugative.x >= 0) {
+                if (fugative.x >= 100) {
                     fugative.x -= distance;
                 } break
             case "d":
             case "ArrowRight":
-                if (fugative.x <= gameCanvas.width - fugative.width) {
+                if (fugative.x <= (gameCanvas.width - 100) - fugative.width) {
                      fugative.x += distance;
                 } break;
             }
