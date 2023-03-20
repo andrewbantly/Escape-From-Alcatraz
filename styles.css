@@ -23,16 +23,23 @@ h1 {
     padding: 0;
 }
 .gameHeader {
+    box-sizing: border-box;
     width: 90%;
-    height: 10vh;
-    margin: 2vh auto 0;
+    margin: 1vh auto 0;
     display: flex;
-    color: whitesmoke;
+    height: 9vh;
     justify-content: space-between;
+    align-items: center;
 }
 .goHome {
     text-decoration: none;
     color: rgb(255, 250, 243);
+    background-color: rgb(67, 67, 67);
+    font-family: 'Stardos Stencil', cursive, sans-serif;
+    border: none;
+    padding: 0;
+    height: 33%;
+    font-size: 1.5rem;
 }
 .gameTitle {
     margin: 0;
@@ -40,21 +47,21 @@ h1 {
 .Instructions {
     padding: 0;
     margin: 0;
-    height: 30%;
+    height: 33%;
 }
 .gameStatusContainer {
     padding: 0;
 }
 .distance {
     margin: 0;
-    height: 30%;
-    font-size: 1.5rem;
+    height: 33%;
+    font-size: 1.5rem; 
 }
 .gameStatusData {
     margin: 0;
-    height: 30%;
+    height: 33%;
     font-size: 1.5rem;
-    text-align: end;
+    text-align: end; 
 }
 section {
     width: 90%;
@@ -76,7 +83,6 @@ main {
     width: 100%;
     position: relative;
     justify-content: center;
-    border: 3px solid burlywood;
 }
 canvas {
     position: relative;
@@ -112,8 +118,12 @@ canvas {
     margin: 5vh auto 0;
 }
 .gameFooter {
-    margin: 2vh auto;
-    width:100%;
+    box-sizing: border-box;
+    margin: 0 auto;
+    width: 100%;
+    height: 10vh;
+    justify-content: space-between;
+    align-items: center;
     display: flex;
     position: relative;
     justify-content: space-between;
@@ -121,7 +131,7 @@ canvas {
 .startButton, .gameReset {
     position: relative;
     width: 8rem;
-    height: 4rem;
+    height: 50%;
     font-size: 1rem;
     background-color: gray;
     color: rgb(255, 250, 243); 
@@ -130,7 +140,7 @@ canvas {
 .startButton {
     margin-top: 25vh;
 }
-.startButton:hover, .gameReset:hover {
+.startButton:hover, .gameReset:hover, .goHome:hover {
     cursor: pointer;
 }
 .gameReset {
@@ -141,8 +151,7 @@ canvas {
     border: 3px solid lightgray;
     font-size: 1.3rem;
     margin: 0;
-    padding: 1rem 0.9rem;
-    height: 2rem;
+    padding: 0.5rem 1rem;
     text-align: center;
     font-style: italic;
 }
