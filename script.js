@@ -41,8 +41,9 @@ class EscapeGame {
                 console.log(`The fugative was caught by the ${this.color} police.`)
                 fugative.atLarge = false;
                 clearInterval(gameLoopInterval);
+                clearInterval(searchLoop);
             }
-            }
+        }
         // WIN DETECTION
         detectWin() {
             const left = this.x <= fugative.width + fugative.x; 
@@ -50,15 +51,16 @@ class EscapeGame {
                 fugative.aFreePerson = true;
                 fugative.atLarge = true;
                 clearInterval(gameLoopInterval);
+                clearInterval(searchLoop);
             }
         }
             // OBSTACLE MOVEMENT 
                // 
             obstacleMovement () {
-                    let i = 0;
-                    const obstacleDistance = 10;
-                    let randomDirection = Math.floor(Math.random() * 4);
-                    if (randomDirection === 0 && this.x > 100) {  
+                let i = 0;
+                const obstacleDistance = 10;
+                let randomDirection = Math.floor(Math.random() * 4);
+                if (randomDirection === 0 && this.x > 100) {  
                         this.x -= obstacleDistance;
                     } else if (randomDirection === 1  && this.x <= (gameCanvas.width - 100)- this.width) {
                         this.x += obstacleDistance;
@@ -83,8 +85,7 @@ const canvasHeight = (getComputedStyle(canvas).height);
 let fugative = new EscapeGame(100, (gameCanvas.height / 2), 50, 20, "beige", true);
 let alcatraz = new EscapeGame(0, 0, 100, (gameCanvas.height), "black", false);
 let freeLand = new EscapeGame ((gameCanvas.width - 100), 0, 100, (gameCanvas.height), "yellow", false)
-let police1 = new EscapeGame(120, 30, 75, 100, "blue", false);
-// let police1 = new EscapeGame((gameCanvas.width / 4), (gameCanvas.height / 3), 75, 100, "blue", false);
+let police1 = new EscapeGame((gameCanvas.width / 4), (gameCanvas.height / 3), 75, 100, "blue", false);
 let police2 = new EscapeGame((gameCanvas.width / 2), (gameCanvas.height - (gameCanvas.height / 4)), 75, 100, "orange", false);
 let police3 = new EscapeGame((gameCanvas.width - (gameCanvas.width / 5)), (gameCanvas.height / 5), 75, 100, "red", false);
 
@@ -96,7 +97,7 @@ function fugativeSearch () {
     police3.obstacleMovement();
 }
 // RENDER REFRESH
-const gameLoopInterval = setInterval (gameLoop, 50);
+let gameLoopInterval = setInterval (gameLoop, 50);
 let searchLoop = setInterval(fugativeSearch, 1000);
 
 // HUMAN KEYBOARD CONTROLS 
@@ -136,13 +137,10 @@ function keyPressEvent(e) {
 document.addEventListener("keydown", keyPressEvent);
 
 
-// GAME FUNCTION
+// GAME LOGIC
 function gameLoop () {
-    // clear the renderer
     if (gameOn === true) {
     ctx.clearRect(0, 0, canvas.width, canvas.height);  
-    // logic of the game
-    // check for collision
     police1.detectHit();
     police2.detectHit();
     police3.detectHit();
@@ -185,20 +183,20 @@ function caughtFugative() {
 }
 
 
-// GAME RESET BUTTON
+// GAME RESET LOGIC
 gameReset.addEventListener("click", gameResetFunction)
-
 function gameResetFunction () {
     console.log("game reset button clicked")
     gameOn = true;
+    fugative.aFreePerson = false;
     fugative = new EscapeGame(100, (gameCanvas.height / 2), 50, 20, "beige", true);
     alcatraz = new EscapeGame(0, 0, 100, (gameCanvas.height), "black", false);
     freeLand = new EscapeGame ((gameCanvas.width - 100), 0, 100, (gameCanvas.height), "yellow", false)
     police1 = new EscapeGame((gameCanvas.width / 4), (gameCanvas.height / 3), 75, 100, "blue", false);
     police2 = new EscapeGame((gameCanvas.width / 2), (gameCanvas.height - (gameCanvas.height / 4)), 75, 100, "orange", false);
     police3 = new EscapeGame((gameCanvas.width - (gameCanvas.width / 5)), (gameCanvas.height / 5), 75, 100, "red", false);
-    const gameLoopInterval = setInterval (gameLoop, 50);
-    let searchLoop = setInterval(fugativeSearch, 1000);
+    gameLoopInterval = setInterval (gameLoop, 50);
+    searchLoop = setInterval(fugativeSearch, 1000);
     document.addEventListener("keydown", keyPressEvent);
     gameDistance.innerText = `${gameCanvas.width - (fugative.x + freeLand.width + 50)}`;
     gameStatusHeader.innerText = "Distance remaining:"
