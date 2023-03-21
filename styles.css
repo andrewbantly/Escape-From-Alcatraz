@@ -5,6 +5,9 @@ body {
     object-fit: cover;
     overflow: hidden;
     color: rgb(255, 250, 243);
+    background-image: url("./media/DSC08588-blur.jpg");
+    background-size: cover;
+    background-position: top;
 } 
 .homeHeader {
     width: 60%;
@@ -25,7 +28,7 @@ h1 {
 .gameHeader {
     box-sizing: border-box;
     width: 60%;
-    margin: 1vh auto 0;
+    margin: 3vh auto 0;
     display: flex;
     height: 9vh;
     justify-content: space-between;
@@ -34,7 +37,7 @@ h1 {
 .goHome {
     text-decoration: none;
     color: rgb(255, 250, 243);
-    background-color: rgb(67, 67, 67);
+    background-color: rgba(0, 0, 0, 0);
     font-family: 'Stardos Stencil', cursive, sans-serif;
     border: none;
     padding: 0;
@@ -126,7 +129,7 @@ canvas {
     width: 8rem;
     height: 50%;
     font-size: 1rem;
-    background-color: gray;
+    background-color: rgba(0, 0, 0, 0);
     color: rgb(255, 250, 243); 
     font-family: 'Stardos Stencil', cursive, sans-serif;
 }
