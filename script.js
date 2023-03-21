@@ -12,11 +12,11 @@ const gameStatusHeader = document.querySelector("#gameStatusHeader");
 const ctx = gameCanvas.getContext("2d");
 gameCanvas.setAttribute("height", getComputedStyle(canvas).height);
 gameCanvas.setAttribute("width", getComputedStyle(canvas).width);
-// console.log(`canvas width: ${(canvas).width} canvas height: ${(canvas).height}`);
+console.log(`canvas width: ${(canvas).width} canvas height: ${(canvas).height}`);
 
 // ONLOAD SETUP
 function onLoad () {
-gameDistance.innerText = `${gameCanvas.width - (fugative.x + freeLand.width + 50)}`;
+gameDistance.innerText = `${(gameCanvas.width - (fugative.x + freeLand.width + 50).toFixed(0))}`;
 clearInterval(pageLoad)
 }
 let pageLoad = setInterval(onLoad, 1);
@@ -26,7 +26,7 @@ let alcatrazImage = document.createElement("img");
 alcatrazImage.src = "./media/AlcatrazImage.png";
 
 const img = new Image();
-let a = (gameCanvas.height / 4);
+let a = (gameCanvas.width / (13/2));
 let b = (gameCanvas.height / 2);
 img.onload=function() {
     ctx.drawImage(img, a, b);
@@ -90,7 +90,7 @@ class EscapeGame {
     render() {
         ctx.fillStyle = this.color;
         ctx.fillRect(this.x, this.y, this.width, this.height);
-        ctx.drawImage(alcatrazImage, 0, (gameCanvas.height / 4), (gameCanvas.height / 2), (gameCanvas.height / 2));
+        ctx.drawImage(alcatrazImage, 0, (gameCanvas.height / 4), (gameCanvas.width / (13/2)), (gameCanvas.height / 2));
         // ctx.drawImage(fugativeImage, (gameCanvas.height / 4), (gameCanvas.height / 2), 56, 23);
     }
 }
@@ -98,7 +98,7 @@ class EscapeGame {
 // GAME OBJECTS
 const canvasWidth = (getComputedStyle(canvas).width);
 const canvasHeight = (getComputedStyle(canvas).height);
-let fugative = new EscapeGame((gameCanvas.height / 4), (gameCanvas.height / 2), 50, 20, "rgba(0, 0, 0, 0)", true);
+let fugative = new EscapeGame((gameCanvas.width / (13/2)), (gameCanvas.height / 2), 56, 23, "rgba(0, 0, 0, 0)", true);
 let freeLand = new EscapeGame ((gameCanvas.width - 100), 0, 100, (gameCanvas.height), "yellow", false)
 let police1 = new EscapeGame((gameCanvas.width / 4), (gameCanvas.height / 3), 75, 100, "blue", false);
 let police2 = new EscapeGame((gameCanvas.width / 2), (gameCanvas.height - (gameCanvas.height / 4)), 75, 100, "orange", false);
@@ -121,22 +121,43 @@ function keyPressEvent(e) {
     switch(e.key) {
         case "w":
             case "ArrowUp":
-                if (fugative.y >= 0) {
+                if ((fugative.y >= 0) && (fugative.x >= (gameCanvas.width / (13/2)))) {
                     fugative.y -= distance;
                     b -= distance;
-                 } break
+                 } else if ((fugative.y <= (gameCanvas.height / 4)) && (fugative.y >= 0)) {
+                    fugative.y -= distance;
+                    b -= distance;
+                 } else if (fugative.y >= ((gameCanvas.height) - (gameCanvas.height / 4))) {
+                    fugative.y -= distance;
+                    b -= distance;
+                 }
+                 break
             case "s":
             case "ArrowDown": 
-                if (fugative.y <= gameCanvas.height - fugative.height) {
+                if ((fugative.y <= gameCanvas.height - fugative.height) && (fugative.x >= (gameCanvas.width / (13/2)))) {
                     fugative.y += distance;
                     b += distance;
-                 } break
+                } else if (fugative.y <= ((gameCanvas.height / 4) - fugative.height)) {
+                fugative.y += distance;
+                b += distance;
+                } else if ((fugative.y >= ((gameCanvas.height) - (gameCanvas.height / 4)) && (fugative.y <= gameCanvas.height - fugative.height))) {
+                fugative.y += distance;
+                b += distance;
+                }
+                 break
             case "a":
             case "ArrowLeft":
-                if (fugative.x >= 100) {
+                if ((fugative.x >= (gameCanvas.width / (13/2))) && (fugative.y >= (gameCanvas.height / 4)) && (fugative.y <= (gameCanvas.height - (gameCanvas.height / 4)))) {
                     fugative.x -= distance;
                     a -= distance;
-                } break
+                } else if ((fugative.x >= 0) && (fugative.y <= (gameCanvas.height / 4))) {
+                    fugative.x -= distance;
+                    a -= distance;
+                } else if ((fugative.x >= 0) && (fugative.y >= (gameCanvas.height - (gameCanvas.height / 4)))) {
+                    fugative.x -= distance;
+                    a -= distance;
+                }
+                break
             case "d":
             case "ArrowRight":
                 if (fugative.x <= (gameCanvas.width - 100) - fugative.width) {
@@ -144,7 +165,7 @@ function keyPressEvent(e) {
                     a += distance;
                 } break;
             }
-    gameDistance.innerText = `${gameCanvas.width - (fugative.x + freeLand.width + 50)}`;
+    gameDistance.innerText = `${(gameCanvas.width - (fugative.x + freeLand.width + 50).toFixed(0))}`;
     } 
     // gameOn === false code here
 }
@@ -202,7 +223,9 @@ function gameResetFunction () {
     console.log("game reset button clicked")
     gameOn = true;
     fugative.aFreePerson = false;
-    let fugative = new EscapeGame((gameCanvas.height / 4), (gameCanvas.height / 2), 50, 20, "beige", true);
+    a = (gameCanvas.width / (13/2));
+    b = (gameCanvas.height / 2);
+    fugative = new EscapeGame((gameCanvas.width / (13/2)), (gameCanvas.height / 2), 56, 23, "rgba(0, 0, 0, 0)", true);
     freeLand = new EscapeGame ((gameCanvas.width - 100), 0, 100, (gameCanvas.height), "yellow", false)
     police1 = new EscapeGame((gameCanvas.width / 4), (gameCanvas.height / 3), 75, 100, "blue", false);
     police2 = new EscapeGame((gameCanvas.width / 2), (gameCanvas.height - (gameCanvas.height / 4)), 75, 100, "orange", false);
