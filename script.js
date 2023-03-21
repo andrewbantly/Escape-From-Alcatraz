@@ -68,35 +68,60 @@ class EscapeGame {
                     && this.x >= (gameCanvas.height / 2) // Game bounds (alcatraz)
                     && (obstacleCollision(objectA, objectB, objectC) === false)) // check object collision
                     {this.x -= obstacleDistance; // move left 
-
-                } else if (randomDirection === 1 // random # 
-                    && (this.x <= (gameCanvas.width - (gameCanvas.height / 2)) - this.width) // game bounds (freeLand)
-                    && (obstacleCollision(objectA, objectB, objectC) === false)) //check object collision
-                    {this.x += obstacleDistance; // move right
-                } else if (randomDirection === 2 // random # 
-                    && this.y >= this.height //canvas bounds
-                    && (obstacleCollision(objectA, objectB, objectC) === false)) // check object collision
-                    { this.y -= obstacleDistance; //move down
-                } else if (randomDirection === 3 //random #
-                    && (this.y <= gameCanvas.height - this.height) // canvas bounds
-                    && (obstacleCollision(objectA, objectB, objectC) === false)) // check object collision
+            } else if (randomDirection === 1 // random # 
+                && (this.x <= (gameCanvas.width - (gameCanvas.height / 2)) - this.width) // game bounds (freeLand)
+                && (obstacleCollision(objectA, objectB, objectC) === false)) //check object collision
+                {this.x += obstacleDistance; // move right
+            } else if (randomDirection === 2 // random # 
+                && this.y >= this.height //canvas bounds
+                && (obstacleCollision(objectA, objectB, objectC) === false)) // check object collision
+                { this.y -= obstacleDistance; //move down
+            } else if (randomDirection === 3 //random #
+                && (this.y <= gameCanvas.height - this.height) // canvas bounds
+                && (obstacleCollision(objectA, objectB, objectC) === false)) // check object collision
                     { this.y += obstacleDistance; // move up
+                    // COLLISION WITH OBJECT B
                 } else if (obstacleCollision(objectA, objectB, objectC) === true // objected collision detected 
-                && (objectA.x <= objectB.width + objectB.x || objectA.x <= objectC.width + objectC.x) // if object collided on right side
+                && (objectA.x <= objectB.width + objectB.x) // if object collided on right side with objectB
                 && (this.x <= (gameCanvas.width - (gameCanvas.height / 2)) - this.width)) // if object is in bounds
                 { this.x += obstacleDistance; // move right
+                    objectB.x -= obstacleDistance; //move objectB the opposite direction
                 } else if (obstacleCollision(objectA, objectB, objectC) === true // objected collision detected 
-                && (objectA.x + objectA.width >= objectB.x || objectA.x + objectA.width >= objectC.x) // if object collided on left side
+                && (objectA.x + objectA.width >= objectB.x) // if object collided on left side with objectB
                 && (this.x >= (gameCanvas.height / 2))) // if object is in bounds
                 { this.x -= obstacleDistance; // move left
+                objectB.x += obstacleDistance; //move objectB the opposite direction
                 } else if (obstacleCollision(objectA, objectB, objectC) === true // objected collision detected 
-                && (objectA.y <= objectB.y + objectB.height || objectA.y <= objectC.y + objectC.height) // if objected collided on top
+                && (objectA.y <= objectB.y + objectB.height) // if objected collided on top with objectB
                 && (randomDirection === 2 && this.y >= this.height)) // if object is in bounds
                 { this.y -= obstacleDistance; // move down
+                objectB.y += obstacleDistance; //move objectB the opposite direction
                 } else if (obstacleCollision(objectA, objectB, objectC) === true //object collision detected 
-                && (objectA.y + objectA.height >= objectB.y || objectA.y + objectA.height >= objectC.y) // if objected collided on bottom 
+                && (objectA.y + objectA.height >= objectB.y) // if objected collided on bottom with objectB
                 && (this.y <= gameCanvas.height - this.height)) // object is in bounds
                 { this.y += obstacleDistance; // move up
+                objectB.y -= obstacleDistance; //move objectB the opposite direction
+                // COLLISION WITH OBJECT C 
+                } else if (obstacleCollision(objectA, objectB, objectC) === true // objected collision detected 
+                && (objectA.x <= objectC.width + objectC.x) // if object collided on right side with objectC
+                && (this.x <= (gameCanvas.width - (gameCanvas.height / 2)) - this.width)) // if object is in bounds
+                { this.x += obstacleDistance; // move right
+                objectC.x -= obstacleDistance; //move objectC the opposite direction
+                } else if (obstacleCollision(objectA, objectC, objectC) === true // objected collision detected 
+                && (objectA.x + objectA.width >= objectC.x) // if object collided on left side with objectC
+                && (this.x >= (gameCanvas.height / 2))) // if object is in bounds
+                { this.x -= obstacleDistance; // move left
+                objectC.x += obstacleDistance; //move objectC the opposite direction
+                } else if (obstacleCollision(objectA, objectC, objectC) === true // objected collision detected 
+                && (objectA.y <= objectC.y + objectC.height) // if objected collided on top with objectC
+                && (randomDirection === 2 && this.y >= this.height)) // if object is in bounds
+                { this.y -= obstacleDistance; // move down
+                objectC.y += obstacleDistance; //move objectC the opposite direction
+                } else if (obstacleCollision(objectA, objectC, objectC) === true //object collision detected 
+                && (objectA.y + objectA.height >= objectC.y) // if objected collided on bottom with objectC
+                && (this.y <= gameCanvas.height - this.height)) // object is in bounds
+                { this.y += obstacleDistance; // move up
+                objectC.y -= obstacleDistance; //move objectC the opposite direction
                 }
             }         
     render() {
