@@ -24,9 +24,6 @@ let pageLoad = setInterval(onLoad, 1);
 // LOAD IMAGES
 let alcatrazImage = document.createElement("img");
 alcatrazImage.src = "./media/AlcatrazImage.png";
-// let fugativeImage = document.createElement("img");
-// fugativeImage.src = "./media/fugative.png";
-
 
 const img = new Image();
 let a = (gameCanvas.height / 4);
@@ -101,8 +98,7 @@ class EscapeGame {
 // GAME OBJECTS
 const canvasWidth = (getComputedStyle(canvas).width);
 const canvasHeight = (getComputedStyle(canvas).height);
-
-let fugative = new EscapeGame((gameCanvas.height / 4), (gameCanvas.height / 2), 50, 20, "beige", true);
+let fugative = new EscapeGame((gameCanvas.height / 4), (gameCanvas.height / 2), 50, 20, "rgba(0, 0, 0, 0)", true);
 let freeLand = new EscapeGame ((gameCanvas.width - 100), 0, 100, (gameCanvas.height), "yellow", false)
 let police1 = new EscapeGame((gameCanvas.width / 4), (gameCanvas.height / 3), 75, 100, "blue", false);
 let police2 = new EscapeGame((gameCanvas.width / 2), (gameCanvas.height - (gameCanvas.height / 4)), 75, 100, "orange", false);
@@ -125,28 +121,28 @@ function keyPressEvent(e) {
     switch(e.key) {
         case "w":
             case "ArrowUp":
-                if (b >= 0) {
+                if (fugative.y >= 0) {
+                    fugative.y -= distance;
                     b -= distance;
-                    // ctx.drawImage(img, a, b);
                  } break
             case "s":
             case "ArrowDown": 
-                if (b <= gameCanvas.height - img.height) {
+                if (fugative.y <= gameCanvas.height - fugative.height) {
+                    fugative.y += distance;
                     b += distance;
-                    // ctx.drawImage(img, a, b);
                  } break
             case "a":
             case "ArrowLeft":
-                if (a >= 100) {
+                if (fugative.x >= 100) {
+                    fugative.x -= distance;
                     a -= distance;
-                    // ctx.drawImage(img, a, b);
                 } break
             case "d":
             case "ArrowRight":
-                if (a <= (gameCanvas.width - 100) - img.width) {
-                     a += distance;
-                    //  ctx.drawImage(img, a, b);
-                 } break;
+                if (fugative.x <= (gameCanvas.width - 100) - fugative.width) {
+                     fugative.x += distance;
+                    a += distance;
+                } break;
             }
     gameDistance.innerText = `${gameCanvas.width - (fugative.x + freeLand.width + 50)}`;
     } 
