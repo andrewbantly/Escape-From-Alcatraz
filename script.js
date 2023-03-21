@@ -25,13 +25,13 @@ let pageLoad = setInterval(onLoad, 1);
 let alcatrazImage = document.createElement("img");
 alcatrazImage.src = "./media/AlcatrazImage.png";
 
-const img = new Image();
-let a = (gameCanvas.width / (13/2));
-let b = (gameCanvas.height / 2);
-img.onload=function() {
-    ctx.drawImage(img, a, b);
+const fugativeImage = new Image();
+let fugativeImageX = (gameCanvas.width / (13/2));
+let fugativeImageY = (gameCanvas.height / 2);
+fugativeImage.onload=function() {
+    ctx.drawImage(fugativeImage, fugativeImageX, fugativeImageY);
 }
-img.src = "./media/fugative.png";
+fugativeImage.src = "./media/fugative.png";
 
 // GAME CLASS
 class EscapeGame {
@@ -123,46 +123,46 @@ function keyPressEvent(e) {
             case "ArrowUp":
                 if ((fugative.y >= 0) && (fugative.x >= (gameCanvas.width / (13/2)))) {
                     fugative.y -= distance;
-                    b -= distance;
+                    fugativeImageY -= distance;
                  } else if ((fugative.y <= (gameCanvas.height / 4)) && (fugative.y >= 0)) {
                     fugative.y -= distance;
-                    b -= distance;
+                    fugativeImageY -= distance;
                  } else if (fugative.y >= ((gameCanvas.height) - (gameCanvas.height / 4))) {
                     fugative.y -= distance;
-                    b -= distance;
+                    fugativeImageY -= distance;
                  }
                  break
             case "s":
             case "ArrowDown": 
                 if ((fugative.y <= gameCanvas.height - fugative.height) && (fugative.x >= (gameCanvas.width / (13/2)))) {
                     fugative.y += distance;
-                    b += distance;
+                    fugativeImageY += distance;
                 } else if (fugative.y <= ((gameCanvas.height / 4) - fugative.height)) {
                 fugative.y += distance;
-                b += distance;
-                } else if ((fugative.y >= ((gameCanvas.height) - (gameCanvas.height / 4)) && (fugative.y <= gameCanvas.height - fugative.height))) {
+                fugativeImageY += distance;
+                } else if ((fugative.y >= ((gameCanvas.height) - (gameCanvas.height / 4) - 10) && (fugative.y <= gameCanvas.height - fugative.height))) {
                 fugative.y += distance;
-                b += distance;
+                fugativeImageY += distance;
                 }
                  break
             case "a":
             case "ArrowLeft":
                 if ((fugative.x >= (gameCanvas.width / (13/2))) && (fugative.y >= (gameCanvas.height / 4)) && (fugative.y <= (gameCanvas.height - (gameCanvas.height / 4)))) {
                     fugative.x -= distance;
-                    a -= distance;
+                    fugativeImageX -= distance;
                 } else if ((fugative.x >= 0) && (fugative.y <= (gameCanvas.height / 4))) {
                     fugative.x -= distance;
-                    a -= distance;
-                } else if ((fugative.x >= 0) && (fugative.y >= (gameCanvas.height - (gameCanvas.height / 4)))) {
+                    fugativeImageX -= distance;
+                } else if ((fugative.x >= 0) && (fugative.y >= (gameCanvas.height - (gameCanvas.height / 4) - 10))) {
                     fugative.x -= distance;
-                    a -= distance;
+                    fugativeImageX -= distance;
                 }
                 break
             case "d":
             case "ArrowRight":
                 if (fugative.x <= (gameCanvas.width - 100) - fugative.width) {
                      fugative.x += distance;
-                    a += distance;
+                     fugativeImageX += distance;
                 } break;
             }
     gameDistance.innerText = `${(gameCanvas.width - (fugative.x + freeLand.width + 50).toFixed(0))}`;
@@ -177,7 +177,7 @@ document.addEventListener("keydown", keyPressEvent);
 function gameLoop () {
     if (gameOn === true) {
     ctx.clearRect(0, 0, canvas.width, canvas.height);  
-    ctx.drawImage(img, a, b);
+    ctx.drawImage(fugativeImage, fugativeImageX, fugativeImageY);
     police1.detectHit();
     police2.detectHit();
     police3.detectHit();
@@ -223,8 +223,8 @@ function gameResetFunction () {
     console.log("game reset button clicked")
     gameOn = true;
     fugative.aFreePerson = false;
-    a = (gameCanvas.width / (13/2));
-    b = (gameCanvas.height / 2);
+    fugativeImageX = (gameCanvas.width / (13/2));
+    fugativeImageY = (gameCanvas.height / 2);
     fugative = new EscapeGame((gameCanvas.width / (13/2)), (gameCanvas.height / 2), 56, 23, "rgba(0, 0, 0, 0)", true);
     freeLand = new EscapeGame ((gameCanvas.width - 100), 0, 100, (gameCanvas.height), "yellow", false)
     police1 = new EscapeGame((gameCanvas.width / 4), (gameCanvas.height / 3), 75, 100, "blue", false);
