@@ -1,11 +1,13 @@
-
+// DOM SELECTORS
 const startButton = document.querySelector("#startButton");
 const gameContainer = document.querySelector("#gameContainer");
 const AlcatrazPhoto = document.querySelector("#alcatrazPhoto");
 const gameHeader = document.querySelector("#gameHeader");
 const main = document.querySelector("main");
 const gameMenu = document.querySelector("#gameMenu");
+const gameFooter = document.querySelector("#gameFooter");
 
+// GAME START BUTTON
 startButton.addEventListener("click", gameStart);
 function gameStart () {
 let gameOn = true;
@@ -36,8 +38,17 @@ gameDistance.classList.add("gameStatusData");
 gameDistance.id = "distance";
 gameStatus.append(gameDistance);
 
-// DOM SELECTORS
-const gameReset = document.querySelector("#gameReset");
+const gameCommentary = document.createElement("h5");
+gameCommentary.classList.add("gameCommentary");
+gameCommentary.id = "gameCommentary";
+gameCommentary.innerText = "Get me out of here!";
+gameFooter.append(gameCommentary);
+
+const gameResetButton = document.createElement("button");
+gameResetButton.classList.add("gameReset");
+gameResetButton.id = "gameReset";
+gameResetButton.innerText = "Reset Game"
+gameFooter.append(gameResetButton);
 
 // CANVAS SETUP
 const ctx = gameCanvas.getContext("2d");
@@ -45,7 +56,7 @@ gameCanvas.setAttribute("height", getComputedStyle(canvas).height);
 gameCanvas.setAttribute("width", getComputedStyle(canvas).width);
 console.log(`canvas width: ${(canvas).width} canvas height: ${(canvas).height}`);
 
-// ONLOAD SETUP
+// ADDITIONAL ONLOAD SETUP
 function onLoad () {
 gameDistance.innerText = `${(gameCanvas.width - (fugative.x + freeLand.width + 50).toFixed(0))}`;
 clearInterval(pageLoad)
@@ -54,12 +65,13 @@ let pageLoad = setInterval(onLoad, 1);
 
 // GAME CLASS
 class EscapeGame {
-    constructor(name, x, y, width, height, imgSrc) {
+    constructor(name, x, y, width, height, speed, imgSrc) {
         this.name = name;
         this.x = x;
         this.y = y;
         this.width = width;
         this.height = height;
+        this.speed = speed;
         this.img = new Image ();
         this.img.src = imgSrc;
         this.aFreePerson = false;
@@ -151,26 +163,13 @@ function obstacleCollision (objectA, objectB) {
     return false;
 }
 
-function inBoundsDetection (object) {
-    let leftBounds = object.x >= (gameCanvas.width / (13/2));
-    let rightBounds = object.x + object.width <= gameCanvas.width - freeLand.width;
-    let topBounds = object.y >= 0;
-    let bottomBounds = (object.y <= gameCanvas.height - object.height);
-    if (leftBounds && rightBounds && topBounds && bottomBounds) {
-        // console.log(`${object.name} is in bounds`);
-        return true;
-    } 
-        // console.log(`${object.name} is out of bounds`);
-        return false;
-}
-
 function collisionAvoid(objectA, objectB) { // not working
     console.log(`collision avoid function triggered by ${objectA.name}`);
     let leftObject = objectA.x <= objectB.width + objectB.x;
     let rightObject = objectA.x + objectA.width >= objectB.x;
     let topObject = objectA.y <= objectB.y + objectB.height;
     let bottomObject = objectA.y + objectA.height >= objectB.y;
-    if (leftObject && topObject && bottomObject) { // i've tried isolating the falsy, only keeping the truthys, specifying all options (like the border control). Both police1 & police2 run this function as ObjectA and move left, even though they are getting collision contacted differently. This should be a falsy return, anyway, as boats are stacked vertically.
+    if (leftObject && topObject && bottomObject) { 
         objectA.x -= 10;
         console.log(`${objectA.name} moved left collision`)
     } else if (rightObject && topObject && bottomObject) {
@@ -183,7 +182,20 @@ function collisionAvoid(objectA, objectB) { // not working
         objectA.y += 10;
         console.log(`${objectA.name} moved down`)
     } else {
-    console.log(`error with ${objectA.name} border avoid function`)}
+        console.log(`error with ${objectA.name} border avoid function`)}
+    }
+    
+function inBoundsDetection (object) {
+    let leftBounds = object.x >= (gameCanvas.width / (13/2));
+    let rightBounds = object.x + object.width <= gameCanvas.width - freeLand.width;
+    let topBounds = object.y >= 0;
+    let bottomBounds = (object.y <= gameCanvas.height - object.height);
+    if (leftBounds && rightBounds && topBounds && bottomBounds) {
+        // console.log(`${object.name} is in bounds`);
+        return true;
+    } 
+        // console.log(`${object.name} is out of bounds`);
+        return false;
 }
 
 function borderAvoid(object) {
@@ -307,7 +319,7 @@ function caughtFugative() {
 
 
 // GAME RESET LOGIC
-gameReset.addEventListener("click", gameResetFunction)
+gameResetButton.addEventListener("click", gameResetFunction)
 function gameResetFunction () {
     console.log("game reset button clicked")
     gameOn = true;
