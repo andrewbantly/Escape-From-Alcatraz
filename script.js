@@ -143,7 +143,6 @@ let alcatraz = new EscapeGame("alcatraz", 0, (gameCanvas.height / 4), (gameCanva
 let fugative = new EscapeGame("fugative", (gameCanvas.width / (13/2)), (gameCanvas.height / 2), 56, 23, 2, "./media/fugative.png");
 let police1 = new EscapeGame("police1", (gameCanvas.width / 4), (gameCanvas.height / 3), 100, 75, 10, "./media/police-boat1.png");
 let police2 = new EscapeGame("police2", (gameCanvas.width / 2), (gameCanvas.height - (gameCanvas.height / 4)), 100, 75, 10, "./media/police-boat2.png");
-
 // let police3 = new EscapeGame("police3", (gameCanvas.width - (gameCanvas.width / 4)), (gameCanvas.height / 5), 75, 100, "./media/police-boat3.png");
 
 // OBSTACLE MOVEMENT & OBSTACLE DETECTION 
@@ -159,11 +158,9 @@ function obstacleCollision (objectA, objectB) {
     let topObject = objectA.y <= objectB.y + objectB.height;
     let bottomObject = objectA.y + objectA.height >= objectB.y;
     if (leftObject && topObject && bottomObject && rightObject) {
-        console.log("obstacles have collided.");
         return true;
     } 
-    // console.log("obstacles have not collided.");
-    return false;
+        return false;
 }
     
 function inBoundsDetection (objectA) {
@@ -172,10 +169,8 @@ function inBoundsDetection (objectA) {
     let topBounds = objectA.y >= 0;
     let bottomBounds = (objectA.y <= gameCanvas.height - objectA.height);
     if (leftBounds && rightBounds && topBounds && bottomBounds) {
-        // console.log(`${object.name} is in bounds`);
         return true;
     } 
-        // console.log(`${object.name} is out of bounds`);
         return false;
 }
 
@@ -195,7 +190,6 @@ function borderAvoid(objectA) {
     } else {
     console.log(`error with ${objectA.name} border avoid function`)}
 }
-
 
 // RENDER REFRESH
 let gameLoopInterval = setInterval (gameLoop, 50);
@@ -243,11 +237,8 @@ function keyPressEvent(e) {
             }
     gameDistance.innerText = `${(gameCanvas.width - (fugative.x + freeLand.width + 50).toFixed(0))}`;
     } 
-    // gameOn === false code here
 }
-
 document.addEventListener("keydown", keyPressEvent);
-
 
 // GAME LOGIC
 function gameLoop () {
@@ -268,37 +259,31 @@ function gameLoop () {
         winner();
     } else {
         caughtFugative()
-    } 
-    // gameOn === false here
+        } 
     }
 }   
 
 // GAME OUTCOME FUNCTIONS
 function winner () {
-    console.log("Player wins");
     gameOn = false;
     document.removeEventListener("keydown", keyPressEvent);
     freeLand.render();
     alcatraz.render();
-    fugative.render();
     gameStatusHeader.innerText = "You got away!"
     gameDistance.innerText = "Escape again?";
 }
 function caughtFugative() {
+    gameOn = false;
+    document.removeEventListener("keydown", keyPressEvent);
     freeLand.render();
     alcatraz.render();
     gameStatusHeader.innerText = "You've been caught by the police!";
     gameDistance.innerText = "Try to escape again?";
-    document.removeEventListener("keydown", keyPressEvent);
-    console.log("Code here to switch to game reset");
-    gameOn = false;
 }
-
 
 // GAME RESET LOGIC
 gameResetButton.addEventListener("click", gameResetFunction)
 function gameResetFunction () {
-    console.log("game reset button clicked")
     gameOn = true;
     fugative.aFreePerson = false;
     fugative = new EscapeGame("fugative", (gameCanvas.width / (13/2)), (gameCanvas.height / 2), 56, 23, 2, "./media/fugative.png");
