@@ -54,7 +54,8 @@ let pageLoad = setInterval(onLoad, 1);
 
 // GAME CLASS
 class EscapeGame {
-    constructor(x, y, width, height, imgSrc) {
+    constructor(name, x, y, width, height, imgSrc) {
+        this.name = name;
         this.x = x;
         this.y = y;
         this.width = width;
@@ -91,70 +92,28 @@ class EscapeGame {
             }
         }
            // OBSTACLE MOVEMENT 
-            obstacleMovement (objectA, objectB, objectC) {
-                let i = 0;
-                const obstacleDistance = 10;
-                let randomDirection = Math.floor(Math.random() * 4);
-                if (randomDirection === 0 // random # 
-                    && this.x >= (gameCanvas.height / 2) // Game bounds (alcatraz)
-                    && (obstacleCollision(objectA, objectB, objectC) === false)) // check object collision
-                    {this.x -= obstacleDistance; // move left 
-            } else if (randomDirection === 1 // random # 
-                && (this.x <= (gameCanvas.width - (gameCanvas.height / 2)) - this.width) // game bounds (freeLand)
-                && (obstacleCollision(objectA, objectB, objectC) === false)) //check object collision
-                {this.x += obstacleDistance; // move right
-            } else if (randomDirection === 2 // random # 
-                && this.y >= this.height //canvas bounds
-                && (obstacleCollision(objectA, objectB, objectC) === false)) // check object collision
-                { this.y -= obstacleDistance; //move down
-            } else if (randomDirection === 3 //random #
-                && (this.y <= gameCanvas.height - this.height) // canvas bounds
-                && (obstacleCollision(objectA, objectB, objectC) === false)) // check object collision
-                    { this.y += obstacleDistance; // move up
-                    // COLLISION WITH OBJECT B
-                } else if (obstacleCollision(objectA, objectB, objectC) === true // objected collision detected 
-                && (objectA.x <= objectB.width + objectB.x) // if object collided on right side with objectB
-                && (this.x <= (gameCanvas.width - (gameCanvas.height / 2)) - this.width)) // if object is in bounds
-                { this.x += obstacleDistance; // move right
-                    objectB.x -= obstacleDistance; //move objectB the opposite direction
-                } else if (obstacleCollision(objectA, objectB, objectC) === true // objected collision detected 
-                && (objectA.x + objectA.width >= objectB.x) // if object collided on left side with objectB
-                && (this.x >= (gameCanvas.height / 2))) // if object is in bounds
-                { this.x -= obstacleDistance; // move left
-                objectB.x += obstacleDistance; //move objectB the opposite direction
-                } else if (obstacleCollision(objectA, objectB, objectC) === true // objected collision detected 
-                && (objectA.y <= objectB.y + objectB.height) // if objected collided on top with objectB
-                && (randomDirection === 2 && this.y >= this.height)) // if object is in bounds
-                { this.y -= obstacleDistance; // move down
-                objectB.y += obstacleDistance; //move objectB the opposite direction
-                } else if (obstacleCollision(objectA, objectB, objectC) === true //object collision detected 
-                && (objectA.y + objectA.height >= objectB.y) // if objected collided on bottom with objectB
-                && (this.y <= gameCanvas.height - this.height)) // object is in bounds
-                { this.y += obstacleDistance; // move up
-                objectB.y -= obstacleDistance; //move objectB the opposite direction
-                // COLLISION WITH OBJECT C 
-                } else if (obstacleCollision(objectA, objectB, objectC) === true // objected collision detected 
-                && (objectA.x <= objectC.width + objectC.x) // if object collided on right side with objectC
-                && (this.x <= (gameCanvas.width - (gameCanvas.height / 2)) - this.width)) // if object is in bounds
-                { this.x += obstacleDistance; // move right
-                objectC.x -= obstacleDistance; //move objectC the opposite direction
-                } else if (obstacleCollision(objectA, objectC, objectC) === true // objected collision detected 
-                && (objectA.x + objectA.width >= objectC.x) // if object collided on left side with objectC
-                && (this.x >= (gameCanvas.height / 2))) // if object is in bounds
-                { this.x -= obstacleDistance; // move left
-                objectC.x += obstacleDistance; //move objectC the opposite direction
-                } else if (obstacleCollision(objectA, objectC, objectC) === true // objected collision detected 
-                && (objectA.y <= objectC.y + objectC.height) // if objected collided on top with objectC
-                && (randomDirection === 2 && this.y >= this.height)) // if object is in bounds
-                { this.y -= obstacleDistance; // move down
-                objectC.y += obstacleDistance; //move objectC the opposite direction
-                } else if (obstacleCollision(objectA, objectC, objectC) === true //object collision detected 
-                && (objectA.y + objectA.height >= objectC.y) // if objected collided on bottom with objectC
-                && (this.y <= gameCanvas.height - this.height)) // object is in bounds
-                { this.y += obstacleDistance; // move up
-                objectC.y -= obstacleDistance; //move objectC the opposite direction
-                }
-            }         
+    obstacleMovement (objectA, objectB) {
+        if (obstacleCollision(objectA, objectB) === false && inBoundsDetection(objectA) === true) {
+            let i = 0;
+            const obstacleDistance = 10;
+            let randomDirection = Math.floor(Math.random() * 4);
+            if (randomDirection === 0) {
+                objectA.x += obstacleDistance;
+            } else if (randomDirection === 1) {
+                objectA.x -= obstacleDistance;
+            } else if (randomDirection === 2) {
+                objectA.y += obstacleDistance;
+            } else if (randomDirection === 3) {
+                objectA.y -= obstacleDistance;
+            } 
+        } else if (obstacleCollision(objectA, objectB) === true) {
+            collisionAvoid(objectA, objectB);
+            console.log(`collision detected between ${objectA.name} and ${objectB.name}`);
+        } else if (inBoundsDetection(objectA) === false) {
+            borderAvoid(objectA);
+            console.log(`${objectA.name} is out of bounds`);
+        }
+    }       
     render() {
         ctx.fillStyle = this.color;
         ctx.drawImage(this.img, this.x, this.y, this.width, this.height) 
@@ -164,40 +123,101 @@ class EscapeGame {
 // GAME OBJECTS
 const canvasWidth = (getComputedStyle(canvas).width);
 const canvasHeight = (getComputedStyle(canvas).height);
-let freeLand = new EscapeGame ((gameCanvas.width - 100), 0, 100, (gameCanvas.height), "./media/Ferry-building.png")
-let alcatraz = new EscapeGame(0, (gameCanvas.height / 4), (gameCanvas.width / (13/2)), (gameCanvas.height / 2), "./media/AlcatrazImage.png")
-let fugative = new EscapeGame((gameCanvas.width / (13/2)), (gameCanvas.height / 2), 56, 23, "./media/fugative.png");
-let police1 = new EscapeGame((gameCanvas.width / 4), (gameCanvas.height / 3), 100, 75, "./media/police-boat1.png");
-let police2 = new EscapeGame((gameCanvas.width / 2), (gameCanvas.height - (gameCanvas.height / 4)), 100, 75, "./media/police-boat2.png");
-let police3 = new EscapeGame((gameCanvas.width - (gameCanvas.width / 4)), (gameCanvas.height / 5), 75, 100, "./media/police-boat3.png");
+let freeLand = new EscapeGame ("freeLand", (gameCanvas.width - 100), 0, 100, (gameCanvas.height), "./media/Ferry-building.png")
+let alcatraz = new EscapeGame("alcatraz", 0, (gameCanvas.height / 4), (gameCanvas.width / (13/2)), (gameCanvas.height / 2), "./media/AlcatrazImage.png")
+let fugative = new EscapeGame("fugative", (gameCanvas.width / (13/2)), (gameCanvas.height / 2), 56, 23, "./media/fugative.png");
+let police1 = new EscapeGame("police1", 300, 120, 100, 75, "./media/police-boat1.png");
+let police2 = new EscapeGame("police2", 300, 30, 100, 75, "./media/police-boat2.png");
+// let police2 = new EscapeGame("police2", (gameCanvas.width / 2), (gameCanvas.height - (gameCanvas.height / 4)), 100, 75, "./media/police-boat2.png");
+// let police3 = new EscapeGame("police3", (gameCanvas.width - (gameCanvas.width / 4)), (gameCanvas.height / 5), 75, 100, "./media/police-boat3.png");
 
 // OBSTACLE MOVEMENT & OBSTACLE DETECTION 
 function fugativeSearch () {
-    police1.obstacleMovement(police1, police2, police3);
-    police2.obstacleMovement(police2, police1, police3);
-    police3.obstacleMovement(police3, police1, police2);
+    police1.obstacleMovement(police1, police2);
+    police2.obstacleMovement(police2, police1);
+    // police3.obstacleMovement(police3, police1, police2);
 }
 
-function obstacleCollision (objectA, objectB, objectC) {
-    let leftObjectAB = objectA.x <= objectB.width + objectB.x;
-    let rightObjectAB = objectA.x + objectA.width >= objectB.x;
-    let topObjectAB = objectA.y <= objectB.y + objectB.height;
-    let bottomObjectAB = objectA.y + objectA.height >= objectB.y;
-    let leftObjectAC = objectA.x <= objectC.width + objectC.x;
-    let rightObjectAC = objectA.x + objectA.width >= objectC.x;
-    let topObjectAC = objectA.y <= objectC.y + objectC.height;
-    let bottomObjectAC = objectA.y + objectA.height >= objectC.y;
-    if (leftObjectAB && topObjectAB && bottomObjectAB && rightObjectAB) {
-        console.log("obstacles have collided.");
-        return true;
-    } else if (leftObjectAC && topObjectAC && bottomObjectAC && rightObjectAC) {
+function obstacleCollision (objectA, objectB) {
+    let leftObject = objectA.x <= objectB.width + objectB.x;
+    let rightObject = objectA.x + objectA.width >= objectB.x;
+    let topObject = objectA.y <= objectB.y + objectB.height;
+    let bottomObject = objectA.y + objectA.height >= objectB.y;
+    if (leftObject && topObject && bottomObject && rightObject) {
         console.log("obstacles have collided.");
         return true;
     } 
-    console.log("obstacles have not collided.");
+    // console.log("obstacles have not collided.");
     return false;
-
 }
+
+function inBoundsDetection (object) {
+    let leftBounds = object.x >= (gameCanvas.width / (13/2));
+    let rightBounds = object.x + object.width <= gameCanvas.width - freeLand.width;
+    let topBounds = object.y >= 0;
+    let bottomBounds = (object.y <= gameCanvas.height - object.height);
+    if (leftBounds && rightBounds && topBounds && bottomBounds) {
+        // console.log(`${object.name} is in bounds`);
+        return true;
+    } 
+        // console.log(`${object.name} is out of bounds`);
+        return false;
+}
+
+function collisionAvoid(objectA, objectB) {
+    console.log(`collision avoid function triggered by ${objectA.name}`);
+    let leftObject = objectA.x <= objectB.width + objectB.x;
+    let rightObject = objectA.x + objectA.width >= objectB.x;
+    let topObject = objectA.y <= objectB.y + objectB.height;
+    let bottomObject = objectA.y + objectA.height >= objectB.y;
+    if (leftObject === false && rightObject === true && topObject === false && bottomObject === false) {
+        objectA.x -= 10;
+        // objectB.x += 10;
+        console.log(`collision caused ${objectA.name} to move left`)
+    } else if (leftObject === true && rightObject === false && topObject === false && bottomObject === false) {
+        objectA.x += 10;
+        console.log(`collision caused ${objectA.name} to move right`)
+        // objectB.x -= 10;
+    } else if (leftObject === false && rightObject === false && topObject === false && bottomObject === true) {
+        objectA.y -= 10;
+        console.log(`collision caused ${objectA.name} to move up`)
+        // objectB.y += 10;
+    } else if (leftObject === false && rightObject === false && topObject === true && bottomObject === false) {
+        objectA.y += 10;
+        console.log(`collision caused ${objectA.name} to move down`)
+        // objectB.y -= 10;
+    } else {
+        console.log(`error with ${objectA.name} collision avoid function`)
+    }
+}
+
+function borderAvoid(object) {
+    console.log(`${object.name} border avoid function triggered`)
+    let leftBounds = object.x <= (gameCanvas.width / (13/2));
+    let rightBounds = object.x + object.width >= gameCanvas.width - freeLand.width;
+    let topBounds = object.y <= 0;
+    let bottomBounds = (object.y >= gameCanvas.height - object.height);
+    if (leftBounds === false && rightBounds === true && topBounds === false && bottomBounds === false) {
+        object.x -= 10;
+        console.log(`${object.name} moved left`)
+    } else if (leftBounds === true && rightBounds === false && topBounds === false && bottomBounds === false) {
+        object.x += 10;
+        console.log(`${object.name} moved right`)
+    } else if (leftBounds === false && rightBounds === false && topBounds === false && bottomBounds === true) {
+        object.y -= 10;
+        console.log(`${object.name} moved up`)
+    } else if (leftBounds === false && rightBounds === false && topBounds === true && bottomBounds === false) {
+        object.y += 10;
+        console.log(`${object.name} moved down`)
+    } else {
+    console.log(`error with ${object.name} border avoid function`)}
+}
+
+
+
+
+
+
 
 // RENDER REFRESH
 let gameLoopInterval = setInterval (gameLoop, 50);
@@ -258,7 +278,7 @@ function gameLoop () {
     ctx.clearRect(0, 0, canvas.width, canvas.height);  
     police1.detectHit();
     police2.detectHit();
-    police3.detectHit();
+    // police3.detectHit();
     freeLand.detectWin();
     if (fugative.atLarge === true && fugative.aFreePerson === false) {
         fugative.render();
@@ -266,7 +286,7 @@ function gameLoop () {
         alcatraz.render();
         police1.render();
         police2.render();
-        police3.render();
+        // police3.render();
     } else if (fugative.atLarge === true && fugative.aFreePerson === true) {
         winner();
     } else {
@@ -307,7 +327,7 @@ function gameResetFunction () {
     fugative = new EscapeGame((gameCanvas.width / (13/2)), (gameCanvas.height / 2), 56, 23, "./media/fugative.png");
     police1 = new EscapeGame((gameCanvas.width / 4), (gameCanvas.height / 3), 100, 75, "./media/police-boat1.png");
     police2 = new EscapeGame((gameCanvas.width / 2), (gameCanvas.height - (gameCanvas.height / 4)), 100, 75, "./media/police-boat2.png");
-    police3 = new EscapeGame((gameCanvas.width - (gameCanvas.width / 4)), (gameCanvas.height / 5), 75, 100, "./media/police-boat3.png");
+    // police3 = new EscapeGame((gameCanvas.width - (gameCanvas.width / 4)), (gameCanvas.height / 5), 75, 100, "./media/police-boat3.png");
     clearInterval(gameLoopInterval);
     clearInterval(searchLoop);
     gameLoopInterval = setInterval (gameLoop, 50);

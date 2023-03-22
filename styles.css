@@ -10,7 +10,7 @@ body {
     background-position: top;
 } 
 .homeHeader {
-    width: 60%;
+    width: 70%;
     height: 10vh;
     margin: 2vh auto;
     display: flex;
@@ -27,7 +27,7 @@ body {
 } */
 .gameHeader {
     box-sizing: border-box;
-    width: 60%;
+    width: 70%;
     margin: 3vh auto 1vh;
     display: flex;
     height: 9vh;
@@ -68,7 +68,7 @@ body {
     text-align: end; 
 }
 main {
-    width: 60%;
+    width: 70%;
     /* height: 70vh; */
     margin: 0 auto;
     display: flex;
