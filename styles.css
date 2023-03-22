@@ -125,6 +125,16 @@ main {
     position: relative;
     justify-content: space-between;
 }
+.commentaryContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.fugativeMugshot {
+    height: 4rem;
+    position: relative;
+    /* transform: scale(2); */
+}
 .startButton, .gameReset {
     position: relative;
     width: 8rem;
@@ -146,10 +156,10 @@ main {
     margin: 0;
 }
 .gameCommentary {
-    border: 3px solid lightgray;
+    /* border: 3px solid lightgray; */
     font-size: 1.3rem;
     margin: 0;
-    padding: 0.5rem 1rem;
+    padding: 1rem 0;
     text-align: center;
     font-style: italic;
 }

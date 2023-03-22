@@ -38,11 +38,23 @@ gameDistance.classList.add("gameStatusData");
 gameDistance.id = "distance";
 gameStatus.append(gameDistance);
 
+// gameFooter article exsists 
+const commentaryContainer = document.createElement("div");
+commentaryContainer.classList.add("commentaryContainer");
+commentaryContainer.id = "commentaryContainer";
+gameFooter.append(commentaryContainer);
+
+const fugativeMugshot = document.createElement("img");
+fugativeMugshot.classList.add("fugativeMugshot");
+fugativeMugshot.id = "fugativeMugshot";
+fugativeMugshot.src = "./media/fugative-mugshot.png";
+commentaryContainer.append(fugativeMugshot);
+
 const gameCommentary = document.createElement("h5");
 gameCommentary.classList.add("gameCommentary");
 gameCommentary.id = "gameCommentary";
-gameCommentary.innerText = "Let's get a move on!";
-gameFooter.append(gameCommentary);
+gameCommentary.innerText = `"Let's get a move on!"`;
+commentaryContainer.append(gameCommentary);
 
 const gameResetButton = document.createElement("button");
 gameResetButton.classList.add("gameReset");
@@ -290,26 +302,26 @@ function detectCommentary () {
     let quarterLeft = fugative.x + fugative.width >= (gameCanvas.width / (4/3));
     if (quarterSwam === true && halfway === false && quarterLeft === false) {
         if (closeToPolice(police1) === true || closeToPolice(police2) === true) {
-            gameCommentary.innerText = "The coppers are on me!";
+            gameCommentary.innerText = `"The coppers are on me!"`;
         } 
         else {
-            gameCommentary.innerText = "This bay is saltier than toilet wine!";}
+            gameCommentary.innerText = `"This bay is saltier than toilet wine!"`;}
     }
     else if (halfway === true && quarterLeft === false) {
         if (closeToPolice(police1) === true || closeToPolice(police2) === true) {
-            gameCommentary.innerText = "I don't want to go back to the Rock!";
+            gameCommentary.innerText = `"I don't want to go back to the Rock!"`;
         } else if (closeToPolice(policeheli) === true) {
-            gameCommentary.innerText = "Who called the heli?!";
+            gameCommentary.innerText = `"Who called the heli?!"`;
         }
-        else {gameCommentary.innerText = "I didn't think I'd make it this far!"}
+        else {gameCommentary.innerText = `"I didn't think I'd make it this far!"`}
     }
     else if (quarterLeft === true) {
         if (closeToPolice(police1) === true || closeToPolice(police2) === true) {
-            gameCommentary.innerText = "I've swam too far to get caught now!";
+            gameCommentary.innerText = `"I've swam too far to get caught now!"`;
         } else if (closeToPolice(policeheli) === true) {
-            gameCommentary.innerText = "Am I on TV?!";
+            gameCommentary.innerText = `"Am I on TV?!"`;
         }
-        else {gameCommentary.innerText = "I think I'm going to make it!"}
+        else {gameCommentary.innerText = `"I think I'm going to make it!"`}
     }
 }
 
@@ -322,7 +334,7 @@ function winner () {
     clearInterval(commentaryLoop);
     gameStatusHeader.innerText = "You got away!"
     gameDistance.innerText = "Escape again?";
-    gameCommentary.innerText = "Where's the driver in that car?!"
+    gameCommentary.innerText = `"Where's the driver in that car?!"`
 }
 function caughtFugative() {
     gameOn = false;
@@ -339,7 +351,7 @@ function caughtFugative() {
     police1.render();
     policeheli.render();
     clearInterval(commentaryLoop);
-    gameCommentary.innerText = "Aw shucks back to solitary confinement for me.";
+    gameCommentary.innerText = `"Aw shucks back to solitary confinement for me."`;
     gameStatusHeader.innerText = "You've been caught by the police!";
     gameDistance.innerText = "Try to escape again?";
 }
@@ -364,7 +376,7 @@ function gameResetFunction () {
     document.addEventListener("keydown", keyPressEvent);
     gameDistance.innerText = `${(gameCanvas.width - (fugative.x + freeLand.width + 50).toFixed(0))}`;
     gameStatusHeader.innerText = "Distance remaining:"
-    gameCommentary.innerText = "Let's get a move on!";
+    gameCommentary.innerText = `"Let's get a move on!"`;
 }
 
 
