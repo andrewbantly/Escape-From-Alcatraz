@@ -41,7 +41,7 @@ gameStatus.append(gameDistance);
 const gameCommentary = document.createElement("h5");
 gameCommentary.classList.add("gameCommentary");
 gameCommentary.id = "gameCommentary";
-gameCommentary.innerText = "Get me out of here!";
+gameCommentary.innerText = "Let's get a move on!";
 gameFooter.append(gameCommentary);
 
 const gameResetButton = document.createElement("button");
@@ -54,7 +54,6 @@ gameFooter.append(gameResetButton);
 const ctx = gameCanvas.getContext("2d");
 gameCanvas.setAttribute("height", getComputedStyle(canvas).height);
 gameCanvas.setAttribute("width", getComputedStyle(canvas).width);
-console.log(`canvas width: ${(canvas).width} canvas height: ${(canvas).height}`);
 
 // ADDITIONAL ONLOAD SETUP
 function onLoad () {
@@ -90,8 +89,6 @@ class EscapeGame {
                 clearInterval(searchLoop);
             }
         }
-// ADD COMMENTARY DETECTION
-
 // WIN DETECTION
         detectWin() {
             const left = this.x <= fugative.width + fugative.x; 
@@ -194,6 +191,7 @@ function borderAvoid(objectA) {
 // RENDER REFRESH
 let gameLoopInterval = setInterval (gameLoop, 50);
 let searchLoop = setInterval(fugativeSearch, 800);
+let commentaryLoop = setInterval(detectCommentary, 50);
 
 // HUMAN KEYBOARD CONTROLS 
 function keyPressEvent(e) {
@@ -263,20 +261,68 @@ function gameLoop () {
     }
 }   
 
+// GAME COMMENTARY
+function closeToPolice(object) {
+    // if fugative x is close to police x + width
+    let leftSide = object.x + object.width;
+    let rightSide = object.x;
+    let topSide = object.y + object.width;
+    let bottomSide = object.y;
+    if (fugative.x - leftSide <= 20 && fugative.x - leftSide > 0) {
+        return true;
+    } else if (rightSide - (fugative.x + fugative.width) <= 20 && rightSide - (fugative.x + fugative.width) > 0) {
+        return true;
+    } else if ((fugative.y) - topSide <= 20 && (fugative.y) - topSide > 0) {
+        return true;
+    } else if (bottomSide - (fugative.y + fugative.height) <= 20 && bottomSide - (fugative.y + fugative.height) > 0) {
+        return true;
+    }
+    return false
+}
+
+function detectCommentary () {
+    let quarterSwam = fugative.x + fugative.width >= (gameCanvas.width / 4);
+    let halfway = fugative.x + fugative.width >= (gameCanvas.width / 2);
+    let quarterLeft = fugative.x + fugative.width >= (gameCanvas.width / (4/3));
+    if (quarterSwam === true && halfway === false && quarterLeft === false) {
+        if (closeToPolice(police1) === true || closeToPolice(police2) === true) {
+            gameCommentary.innerText = "The coppers are on me!";
+        }
+        else {
+            gameCommentary.innerText = "This bay is saltier than toilet wine!";}
+    }
+    else if (halfway === true && quarterLeft === false) {
+        if (closeToPolice(police1) === true || closeToPolice(police2) === true) {
+            gameCommentary.innerText = "I don't want to go back to the Rock!";
+        }
+        else {gameCommentary.innerText = "I didn't think I'd make it this far!"}
+    }
+    else if (quarterLeft === true) {
+        if (closeToPolice(police1) === true || closeToPolice(police2) === true) {
+            gameCommentary.innerText = "I've swam too far to get caught now!";
+        }
+        else {gameCommentary.innerText = "I think I'm going to make it!"}
+    }
+}
+
 // GAME OUTCOME FUNCTIONS
 function winner () {
     gameOn = false;
     document.removeEventListener("keydown", keyPressEvent);
     freeLand.render();
     alcatraz.render();
+    clearInterval(commentaryLoop);
     gameStatusHeader.innerText = "You got away!"
     gameDistance.innerText = "Escape again?";
+    gameCommentary.innerText = "Where's the driver in that car?!"
 }
 function caughtFugative() {
     gameOn = false;
     document.removeEventListener("keydown", keyPressEvent);
     freeLand.render();
     alcatraz.render();
+    clearInterval(commentaryLoop);
+    gameCommentary.innerText = "Aw shucks back to solitary confinement for me.";
     gameStatusHeader.innerText = "You've been caught by the police!";
     gameDistance.innerText = "Try to escape again?";
 }
@@ -293,11 +339,14 @@ function gameResetFunction () {
     police2 = new EscapeGame("police2", (gameCanvas.width / 2), (gameCanvas.height - (gameCanvas.height / 4)), 100, 75, 10, "./media/police-boat2.png");
     clearInterval(gameLoopInterval);
     clearInterval(searchLoop);
+    clearInterval(commentaryLoop);
     gameLoopInterval = setInterval (gameLoop, 50);
     searchLoop = setInterval(fugativeSearch, 1000);
+    commentaryLoop = setInterval(detectCommentary, 50);
     document.addEventListener("keydown", keyPressEvent);
     gameDistance.innerText = `${(gameCanvas.width - (fugative.x + freeLand.width + 50).toFixed(0))}`;
     gameStatusHeader.innerText = "Distance remaining:"
+    gameCommentary.innerText = "Let's get a move on!";
 }
 
 
