@@ -107,7 +107,6 @@ class EscapeGame {
                 objectA.y -= obstacleDistance;
             } 
         } else if (obstacleCollision(objectA, objectB) === true) {
-            collisionAvoid(objectA, objectB);
             console.log(`collision detected between ${objectA.name} and ${objectB.name}`);
         } else if (inBoundsDetection(objectA) === false) {
             borderAvoid(objectA);
@@ -126,7 +125,7 @@ const canvasHeight = (getComputedStyle(canvas).height);
 let freeLand = new EscapeGame ("freeLand", (gameCanvas.width - 100), 0, 100, (gameCanvas.height), "./media/Ferry-building.png")
 let alcatraz = new EscapeGame("alcatraz", 0, (gameCanvas.height / 4), (gameCanvas.width / (13/2)), (gameCanvas.height / 2), "./media/AlcatrazImage.png")
 let fugative = new EscapeGame("fugative", (gameCanvas.width / (13/2)), (gameCanvas.height / 2), 56, 23, "./media/fugative.png");
-let police1 = new EscapeGame("police1", 300, 120, 100, 75, "./media/police-boat1.png");
+let police1 = new EscapeGame("police1", 300, 100, 100, 75, "./media/police-boat1.png");
 let police2 = new EscapeGame("police2", 300, 30, 100, 75, "./media/police-boat2.png");
 // let police2 = new EscapeGame("police2", (gameCanvas.width / 2), (gameCanvas.height - (gameCanvas.height / 4)), 100, 75, "./media/police-boat2.png");
 // let police3 = new EscapeGame("police3", (gameCanvas.width - (gameCanvas.width / 4)), (gameCanvas.height / 5), 75, 100, "./media/police-boat3.png");
@@ -145,6 +144,7 @@ function obstacleCollision (objectA, objectB) {
     let bottomObject = objectA.y + objectA.height >= objectB.y;
     if (leftObject && topObject && bottomObject && rightObject) {
         console.log("obstacles have collided.");
+        collisionAvoid(objectA, objectB);
         return true;
     } 
     // console.log("obstacles have not collided.");
@@ -164,31 +164,26 @@ function inBoundsDetection (object) {
         return false;
 }
 
-function collisionAvoid(objectA, objectB) {
+function collisionAvoid(objectA, objectB) { // not working
     console.log(`collision avoid function triggered by ${objectA.name}`);
     let leftObject = objectA.x <= objectB.width + objectB.x;
     let rightObject = objectA.x + objectA.width >= objectB.x;
     let topObject = objectA.y <= objectB.y + objectB.height;
     let bottomObject = objectA.y + objectA.height >= objectB.y;
-    if (leftObject === false && rightObject === true && topObject === false && bottomObject === false) {
+    if (leftObject && topObject && bottomObject) { // i've tried isolating the falsy, only keeping the truthys, specifying all options (like the border control). Both police1 & police2 run this function as ObjectA and move left, even though they are getting collision contacted differently. This should be a falsy return, anyway, as boats are stacked vertically.
         objectA.x -= 10;
-        // objectB.x += 10;
-        console.log(`collision caused ${objectA.name} to move left`)
-    } else if (leftObject === true && rightObject === false && topObject === false && bottomObject === false) {
+        console.log(`${objectA.name} moved left collision`)
+    } else if (rightObject && topObject && bottomObject) {
         objectA.x += 10;
-        console.log(`collision caused ${objectA.name} to move right`)
-        // objectB.x -= 10;
-    } else if (leftObject === false && rightObject === false && topObject === false && bottomObject === true) {
+        console.log(`${objectA.name} moved right`)
+    } else if (leftObject && rightObject && topObject) {
         objectA.y -= 10;
-        console.log(`collision caused ${objectA.name} to move up`)
-        // objectB.y += 10;
-    } else if (leftObject === false && rightObject === false && topObject === true && bottomObject === false) {
+        console.log(`${objectA.name} moved up`)
+    } else if (leftObject && rightObject && bottomObject) {
         objectA.y += 10;
-        console.log(`collision caused ${objectA.name} to move down`)
-        // objectB.y -= 10;
+        console.log(`${objectA.name} moved down`)
     } else {
-        console.log(`error with ${objectA.name} collision avoid function`)
-    }
+    console.log(`error with ${objectA.name} border avoid function`)}
 }
 
 function borderAvoid(object) {
@@ -214,14 +209,9 @@ function borderAvoid(object) {
 }
 
 
-
-
-
-
-
 // RENDER REFRESH
 let gameLoopInterval = setInterval (gameLoop, 50);
-let searchLoop = setInterval(fugativeSearch, 1000);
+let searchLoop = setInterval(fugativeSearch, 800);
 
 // HUMAN KEYBOARD CONTROLS 
 function keyPressEvent(e) {
