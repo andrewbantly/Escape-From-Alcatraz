@@ -1,12 +1,43 @@
+
+const startButton = document.querySelector("#startButton");
+const gameContainer = document.querySelector("#gameContainer");
+const AlcatrazPhoto = document.querySelector("#alcatrazPhoto");
+const gameHeader = document.querySelector("#gameHeader");
+const main = document.querySelector("main");
+const gameMenu = document.querySelector("#gameMenu");
+
+startButton.addEventListener("click", gameStart);
+function gameStart () {
 let gameOn = true;
 
+// REMOVE ELEMENTS
+AlcatrazPhoto.remove();
+gameMenu.remove();
+
+// CREATE ELEMENTS
+const gameCanvas = document.createElement("canvas");
+gameCanvas.classList.add("gameOnCanvas");
+gameCanvas.id = "canvas";
+gameContainer.append(gameCanvas);
+
+const gameStatus = document.createElement("div");
+gameStatus.classList.add("gameStatusContainer");
+gameStatus.id = "gameStatus";
+gameHeader.append(gameStatus);
+
+const gameStatusHeader = document.createElement("h2");
+gameStatusHeader.classList.add("distance");
+gameStatusHeader.id = "gameStatusHeader";
+gameStatusHeader.innerText = "Distance remaining:"
+gameStatus.append(gameStatusHeader);
+
+const gameDistance = document.createElement("h5");
+gameDistance.classList.add("gameStatusData");
+gameDistance.id = "distance";
+gameStatus.append(gameDistance);
+
 // DOM SELECTORS
-const startButton = document.querySelector("#startButton")
-const gameDistance = document.querySelector("#distance");
-const gameCanvas = document.querySelector("#canvas");
 const gameReset = document.querySelector("#gameReset");
-const gameStatus = document.querySelector("#gameStatus");
-const gameStatusHeader = document.querySelector("#gameStatusHeader");
 
 // CANVAS SETUP
 const ctx = gameCanvas.getContext("2d");
@@ -284,4 +315,8 @@ function gameResetFunction () {
     document.addEventListener("keydown", keyPressEvent);
     gameDistance.innerText = `${(gameCanvas.width - (fugative.x + freeLand.width + 50).toFixed(0))}`;
     gameStatusHeader.innerText = "Distance remaining:"
+}
+
+
+// START GAME BUTTON FUNCTION END
 }

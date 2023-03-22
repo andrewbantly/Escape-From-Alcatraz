@@ -12,28 +12,31 @@
     <link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Stardos+Stencil:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <header class="gameHeader">
+    <header class="gameHeader" id="gameHeader">
         <div>
-        <!-- <a class="goHome" href="./home.html"><h2 class="gameTitle">Escape From Alcatraz</h2></a> -->
-        <button class="goHome" href="./home.html">Escape From Alcatraz</button>
+        <h1 class="gameTitle">Escape From Alcatraz</h1>
         <p class="Instructions">Use your arrow keys to swim cross the San Francisco Bay!</p>
-        </div>
-        <div class="gameStatusContainer" id="gameStatus">
-            <h2 id="gameStatusHeader" class="distance">Distance remaining:</h2>
-            <h5 class ="gameStatusData" id="distance"></h5>
         </div>
     </header>
     <main>
-        <!-- <div class="gameContainer" id="gameContainer"> -->
-            <canvas id="canvas">
-            </canvas>
-        <!-- </div> -->
+        <div class="gameContainer" id="gameContainer">
+            <img class="alcatrazPhoto" id="alcatrazPhoto" src="./media/DSC08588.jpg">
+            <div class="gameMenu" id="gameMenu">
+                <div class="gameObjectiveDiv">
+                <p class="gameObjective" id="gameObjective">You just busted out of Alcatraz Prison and only a two mile swim across the San Francisco Bay separates you from freedom! Be careful though, you could be spotted by the cops. Swim across the bay in time to win the game!</p></div>
+                <button class="startButton" id="startButton">Start game</button>
+                </div>
+            </div>
         <article class="gameFooter" id="gameReset">
-            <h5 class="gameCommentary" id="gameCommentary">"This current is damn strong!"</h5>
-            <button class="gameReset">Reset Game</button>
+            <!-- TRIGGER THIS IN JAVASCRIPT -->
+            <!-- <h5 class="gameCommentary" id="gameCommentary">"This current is damn strong!"</h5>
+            <button class="gameReset">Reset Game</button> -->
         </article>
     </main>
     <footer>
+        <p>Developed by Andrew Bantly</p>
+        <p>LinkedIn</p>
+        <p>GitHub</p>
     </footer>
 </body>
 </html>

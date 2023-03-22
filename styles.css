@@ -18,17 +18,17 @@ body {
 .homeHeader {
     justify-content: center;
 }
-h1 {
+/* h1 {
     text-align: center;
     font-size: 5rem;
     position: relative;
     margin: 0 auto 5vh;
     padding: 0;
-}
+} */
 .gameHeader {
     box-sizing: border-box;
     width: 60%;
-    margin: 3vh auto 0;
+    margin: 3vh auto 1vh;
     display: flex;
     height: 9vh;
     justify-content: space-between;
@@ -46,6 +46,7 @@ h1 {
 }
 .gameTitle {
     margin: 0;
+    font-size: 1.5rem;
 }
 .Instructions {
     padding: 0;
@@ -66,30 +67,30 @@ h1 {
     font-size: 1.5rem;
     text-align: end; 
 }
-
 main {
     width: 60%;
-    height: 70vh;
+    /* height: 70vh; */
     margin: 0 auto;
     display: flex;
-    overflow: hidden;
     flex-wrap: wrap;
 }
 .gameContainer {
     width: 100%;
     position: relative;
     justify-content: center;
+    background-size: cover;
 }
-canvas {
+.gameOnCanvas {
     position: relative;
     width: 100%;
     background-image: url(./media/Water.jpg);
     background-size: cover;
     border: 3px solid lightgray;
 }
-.alcatrazImage {
+.alcatrazPhoto {
     max-width: 100%;
     position: absolute;
+    border: 3px solid lightgray;
 }
 .gameMenu {
     width: 100%;
@@ -115,7 +116,7 @@ canvas {
 }
 .gameFooter {
     box-sizing: border-box;
-    margin: 0 auto;
+    margin: 1vh auto;
     width: 100%;
     height: 10vh;
     justify-content: space-between;
@@ -127,20 +128,21 @@ canvas {
 .startButton, .gameReset {
     position: relative;
     width: 8rem;
-    height: 50%;
-    font-size: 1rem;
-    background-color: rgba(0, 0, 0, 0);
+    font-size: 1.2rem;
+    background-color: rgba(0, 0, 0, 1);
     color: rgb(255, 250, 243); 
     font-family: 'Stardos Stencil', cursive, sans-serif;
 }
 .startButton {
-    margin-top: 25vh;
+    height: 30%;
+    margin: 18vh auto;
 }
 .startButton:hover, .gameReset:hover, .goHome:hover {
     cursor: pointer;
 }
 .gameReset {
     position: relative;
+    height: 50%;
     margin: 0;
 }
 .gameCommentary {
