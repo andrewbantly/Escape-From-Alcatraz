@@ -341,7 +341,7 @@ function caughtFugative() {
     document.removeEventListener("keydown", keyPressEvent);
     police1 = new EscapeGame("police1", fugative.x - police1.width, fugative.y - (police1.height / 2), 100, 75, 10, "./media/police-boat1.png");
     policeheli = new EscapeGame("policeheli", fugative.x - (policeheli.width / 3), fugative.y + (fugative.height * 3/2), 100, 125, 30, "./media/police-heli.png");
-    if (fugative.x <= (gameCanvas.width / (4/3))) {
+    if (fugative.x <= (gameCanvas.width / (5/3))) {
         police2 = new EscapeGame("police2", fugative.x + fugative.width, fugative.y - (police2.height / 2), 100, 75, 10, "./media/police-boat2.png");
         police2.render();
         }
