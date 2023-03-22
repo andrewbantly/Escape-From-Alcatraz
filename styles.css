@@ -7,7 +7,9 @@ body {
     color: rgb(255, 250, 243);
     background-image: url("./media/DSC08588-blur.jpg");
     background-size: cover;
-    background-position: top;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-attachment: fixed;
 } 
 .homeHeader {
     width: 70%;
@@ -34,21 +36,11 @@ body {
     justify-content: space-between;
     align-items: center;
 }
-.goHome {
-    text-decoration: none;
-    color: rgb(255, 250, 243);
-    background-color: rgba(0, 0, 0, 0);
-    font-family: 'Stardos Stencil', cursive, sans-serif;
-    border: none;
-    padding: 0;
-    height: 33%;
-    font-size: 1.5rem;
-}
 .gameTitle {
     margin: 0;
     font-size: 1.5rem;
 }
-.Instructions {
+.instructions {
     padding: 0;
     margin: 0;
     height: 33%;
@@ -69,7 +61,6 @@ body {
 }
 main {
     width: 70%;
-    /* height: 70vh; */
     margin: 0 auto;
     display: flex;
     flex-wrap: wrap;
@@ -163,6 +154,10 @@ main {
     text-align: center;
     font-style: italic;
 }
-
+footer {
+    border: 3px solid hotpink;
+    width: 70%;
+    margin: 0 auto;
+}
 
 

@@ -5,13 +5,12 @@ const alcatrazPhoto = document.querySelector("#alcatrazPhoto");
 const gameHeader = document.querySelector("#gameHeader");
 const main = document.querySelector("main");
 const gameMenu = document.querySelector("#gameMenu");
-const gameFooter = document.querySelector("#gameFooter");
 
 // GAME START BUTTON
 startButton.addEventListener("click", gameStart);
 function gameStart () {
-let gameOn = true;
-
+    let gameOn = true;
+    
 // REMOVE ELEMENTS
 alcatrazPhoto.remove();
 gameMenu.remove();
@@ -37,8 +36,12 @@ const gameDistance = document.createElement("h5");
 gameDistance.classList.add("gameStatusData");
 gameDistance.id = "distance";
 gameStatus.append(gameDistance);
+    
+const gameFooter = document.createElement("article");
+gameFooter.classList.add("gameFooter");
+gameFooter.id = "gameFooter";
+main.append(gameFooter);
 
-// gameFooter article exsists 
 const commentaryContainer = document.createElement("div");
 commentaryContainer.classList.add("commentaryContainer");
 commentaryContainer.id = "commentaryContainer";
