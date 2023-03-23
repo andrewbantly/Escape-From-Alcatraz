@@ -340,7 +340,10 @@ function winner () {
 function caughtFugative() {
     gameOn = false;
     document.removeEventListener("keydown", keyPressEvent);
-    police1 = new EscapeGame("police1", fugative.x - police1.width, fugative.y - (police1.height / 2), 100, 75, 10, "./media/police-boat1.png");
+    if (fugative.x >= alcatraz.width + police1.width) {
+        police1 = new EscapeGame("police1", fugative.x - police1.width, fugative.y - (police1.height / 2), 100, 75, 10, "./media/police-boat1.png");
+        police1.render();
+        }
     policeheli = new EscapeGame("policeheli", fugative.x - (policeheli.width / 3), fugative.y + (fugative.height * 3/2), 100, 125, 30, "./media/police-heli.png");
     if (fugative.x <= (gameCanvas.width / (5/3))) {
         police2 = new EscapeGame("police2", fugative.x + fugative.width, fugative.y - (police2.height / 2), 100, 75, 10, "./media/police-boat2.png");
@@ -349,7 +352,6 @@ function caughtFugative() {
     fugative.render();
     freeLand.render();
     alcatraz.render();
-    police1.render();
     policeheli.render();
     clearInterval(commentaryLoop);
     gameCommentary.innerText = `"Aw shucks back to solitary confinement for me."`;
