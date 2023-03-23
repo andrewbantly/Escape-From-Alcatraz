@@ -11,7 +11,7 @@ To escape from Alcatraz, the player will have a top-down view of their swim acro
 * JavaScript (canvas)
 
 ## Wireframe
-![Wireframe](./Wireframe_%20Escape-From-Alcatraz%202023-03-16.jpg)
+![Wireframe](./docs/Wireframe_%20Escape-From-Alcatraz%202023-03-16.jpg)
 
 ## MVP Goals
 
