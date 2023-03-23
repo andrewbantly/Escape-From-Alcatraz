@@ -74,7 +74,7 @@ gameCanvas.setAttribute("width", getComputedStyle(canvas).width);
 
 // ADDITIONAL ONLOAD SETUP
 function onLoad () {
-gameDistance.innerText = `${(gameCanvas.width - (fugative.x + freeLand.width + 50).toFixed(0))}`;
+gameDistance.innerText = `${(gameCanvas.width - (fugative.x + fugative.width + freeLand.width).toFixed(0))}`;
 clearInterval(pageLoad)
 console.log(`width: ${gameCanvas.width} height: ${gameCanvas.height}`)
 }
@@ -252,7 +252,7 @@ function keyPressEvent(e) {
                      fugative.x += fugative.speed;
                 } break;
             }
-    gameDistance.innerText = `${(gameCanvas.width - (fugative.x + freeLand.width + 50).toFixed(0))}`;
+    gameDistance.innerText = `${(gameCanvas.width - (fugative.x + fugative.width + freeLand.width).toFixed(0))}`;
     } 
 }
 document.addEventListener("keydown", keyPressEvent);
@@ -287,13 +287,13 @@ function closeToPolice(object) {
     let rightSide = object.x;
     let topSide = object.y + object.width;
     let bottomSide = object.y;
-    if (fugative.x - leftSide <= 20 && fugative.x - leftSide > 0) {
+    if (fugative.x - leftSide <= (fugative.width * 2) && fugative.x - leftSide > 0) {
         return true;
-    } else if (rightSide - (fugative.x + fugative.width) <= 20 && rightSide - (fugative.x + fugative.width) > 0) {
+    } else if (rightSide - (fugative.x + fugative.width) <= (fugative.width * 2) && rightSide - (fugative.x + fugative.width) > 0) {
         return true;
-    } else if ((fugative.y) - topSide <= 20 && (fugative.y) - topSide > 0) {
+    } else if ((fugative.y) - topSide <= (fugative.width * 2) && (fugative.y) - topSide > 0) {
         return true;
-    } else if (bottomSide - (fugative.y + fugative.height) <= 20 && bottomSide - (fugative.y + fugative.height) > 0) {
+    } else if (bottomSide - (fugative.y + fugative.height) <= (fugative.width * 2) && bottomSide - (fugative.y + fugative.height) > 0) {
         return true;
     }
     return false
@@ -364,12 +364,12 @@ gameResetButton.addEventListener("click", gameResetFunction)
 function gameResetFunction () {
     gameOn = true;
     fugative.aFreePerson = false;
-    fugative = new EscapeGame("fugative", (gameCanvas.width / (13/2)), (gameCanvas.height / 2), 56, 23, 2, "./media/fugative.png");
-    freeLand = new EscapeGame ("freeLand", (gameCanvas.width - 100), 0, 100, (gameCanvas.height), 0, "./media/Ferry-building.png")
-    alcatraz = new EscapeGame("alcatraz", 0, (gameCanvas.height / 4), (gameCanvas.width / (13/2)), (gameCanvas.height / 2), 0, "./media/AlcatrazImage.png")
-    police1 = new EscapeGame("police1", (gameCanvas.width / 4), (gameCanvas.height / 3), 100, 75, 10, "./media/police-boat1.png");
-    police2 = new EscapeGame("police2", (gameCanvas.width / 2), (gameCanvas.height - (gameCanvas.height / 4)), 100, 75, 10, "./media/police-boat2.png");
-    policeheli = new EscapeGame("policeheli", (gameCanvas.width - (gameCanvas.width / 4)), gameCanvas.height / 2, 100, 125, 30, "./media/police-heli.png");
+    // fugative = new EscapeGame("fugative", (gameCanvas.width / (13/2)), (gameCanvas.height / 2), 56, 23, 2, "./media/fugative.png");
+    // freeLand = new EscapeGame ("freeLand", (gameCanvas.width - 100), 0, 100, (gameCanvas.height), 0, "./media/Ferry-building.png")
+    // alcatraz = new EscapeGame("alcatraz", 0, (gameCanvas.height / 4), (gameCanvas.width / (13/2)), (gameCanvas.height / 2), 0, "./media/AlcatrazImage.png")
+    // police1 = new EscapeGame("police1", (gameCanvas.width / 4), (gameCanvas.height / 3), 100, 75, 10, "./media/police-boat1.png");
+    // police2 = new EscapeGame("police2", (gameCanvas.width / 2), (gameCanvas.height - (gameCanvas.height / 4)), 100, 75, 10, "./media/police-boat2.png");
+    // policeheli = new EscapeGame("policeheli", (gameCanvas.width - (gameCanvas.width / 4)), gameCanvas.height / 2, 100, 125, 30, "./media/police-heli.png");
     clearInterval(gameLoopInterval);
     clearInterval(searchLoop);
     clearInterval(commentaryLoop);
@@ -377,7 +377,7 @@ function gameResetFunction () {
     searchLoop = setInterval(fugativeSearch, 1000);
     commentaryLoop = setInterval(detectCommentary, 50);
     document.addEventListener("keydown", keyPressEvent);
-    gameDistance.innerText = `${(gameCanvas.width - (fugative.x + freeLand.width + 50).toFixed(0))}`;
+    gameDistance.innerText = `${(gameCanvas.width - (fugative.x + fugative.width + freeLand.width).toFixed(0))}`;
     gameStatusHeader.innerText = "Distance remaining:"
     gameCommentary.innerText = `"Let's get a move on!"`;
 }
