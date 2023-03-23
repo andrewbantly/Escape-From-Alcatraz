@@ -4,11 +4,11 @@ html {
 body {
     background-color: rgb(67, 67, 67);
     margin: 0;
-    font-family: 'Stardos Stencil', cursive, sans-serif;
+    font-family: 'Stardos Stencil', sans-serif;
     object-fit: cover;
     overflow: hidden;
     color: rgb(255, 250, 243);
-    background-image: url("./media/DSC08588-blur.jpg");
+    background-image: url(../media/DSC08588-blur.jpg);
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center center;
@@ -63,7 +63,7 @@ main {
 .gameOnCanvas {
     position: relative;
     width: 100%;
-    background-image: url(./media/Water.jpg);
+    background-image: url(../media/Water.jpg);
     background-size: cover;
     border: 3px solid lightgray;
     border-radius: 0.2rem;
@@ -121,7 +121,6 @@ main {
 .fugativeMugshot {
     height: 4rem;
     position: relative;
-    /* transform: scale(2); */
 }
 .startButton, .gameReset {
     position: relative;
@@ -129,7 +128,7 @@ main {
     font-size: 1.2rem;
     background-color: rgba(0, 0, 0, 1);
     color: rgb(255, 250, 243); 
-    font-family: 'Stardos Stencil', cursive, sans-serif;
+    font-family: 'Stardos Stencil', sans-serif;
     border: 0.1rem solid rgb(67, 67, 67);
     border-radius: 0.2rem;
     height: 2rem;
@@ -162,122 +161,4 @@ footer > a {
     text-decoration: none;
     margin-left: 1rem;
     color: rgb(209, 209, 209);
-}
-
-
-/* MOBILE DESIGN */
-@media (max-width: 900px) {
-    .gameHeader {
-        width: 60%;
-        margin: 4vh auto 2vh;
-    }
-    .gameStatusContainer {
-        padding: 0;
-        align-items: baseline;
-    }
-    main {
-        width: 60%;
-        margin: 0 auto;
-        display: flex;
-        flex-wrap: wrap;
-    }
-    .gameContainer {
-        width: 100%;
-        height: 23.5rem;
-        position: relative;
-        justify-content: center;
-        background-size: cover;
-    }
-    .gameOnCanvas {
-        position: relative;
-        width: 100%;
-        background-image: url(./media/Water.jpg);
-        background-size: cover;
-        border: 3px solid lightgray;
-        border-radius: 0.2rem;
-    }
-    .gameMenu {
-        width: 100%;
-        position: relative;
-        display: flex;
-        justify-content: center;
-        flex-wrap: wrap;
-    }
-    .gameObjectiveDiv {
-        width: 100%;
-        height: 10rem;
-        display: flex;
-        justify-content: center;
-    }
-    .gameObjective {
-        font-size: 1rem;
-    }
-    .homePageSpacer {
-        box-sizing: border-box;
-        margin: 1rem auto;
-        width: 100%;
-        height: 3rem;
-        position: relative;
-    }
-    .gameFooter {
-        box-sizing: border-box;
-        margin: 1rem auto;
-        width: 100%;
-        height: 3rem;
-        justify-content: space-between;
-        align-items: center;
-        display: flex;
-        position: relative;
-        justify-content: space-between;
-    }
-    .commentaryContainer {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-    .fugativeMugshot {
-        height: 4rem;
-        position: relative;
-        /* transform: scale(2); */
-    }
-    .startButton, .gameReset {
-        position: relative;
-        width: 8rem;
-        font-size: 1.2rem;
-        background-color: rgba(0, 0, 0, 1);
-        color: rgb(255, 250, 243); 
-        font-family: 'Stardos Stencil', cursive, sans-serif;
-        border: 0.1rem solid rgb(67, 67, 67);
-        border-radius: 0.2rem;
-        height: 2rem;
-        padding: 0.2rem;
-    }
-    .startButton {
-        margin: 4rem auto 0;
-    }
-    .startButton:hover, .gameReset:hover, .goHome:hover {
-        cursor: pointer;
-    }
-    .gameReset {
-        margin: 0;
-    }
-    .gameCommentary {
-        font-size: 1.3rem;
-        margin: 0;
-        padding: 1rem 0;
-        text-align: center;
-        font-style: italic;
-    }
-    footer {
-        width: 70%;
-        margin: 0 auto;
-        display: flex;
-        flex-direction: row;
-        color: rgb(255, 250, 243);
-    }
-    footer > a {
-        text-decoration: none;
-        margin-left: 1rem;
-        color: rgb(209, 209, 209);
-    }
 }

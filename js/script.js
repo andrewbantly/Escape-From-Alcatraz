@@ -76,7 +76,6 @@ gameCanvas.setAttribute("width", getComputedStyle(canvas).width);
 function onLoad () {
 gameDistance.innerText = `${(gameCanvas.width - (fugative.x + fugative.width + freeLand.width).toFixed(0))}`;
 clearInterval(pageLoad)
-console.log(`canvas width: ${gameCanvas.width} height: ${gameCanvas.height}`)
 }
 let pageLoad = setInterval(onLoad, 1);
 
@@ -156,14 +155,16 @@ class EscapeGame {
 let freeLand = new EscapeGame ("freeLand", (gameCanvas.width - (gameCanvas.width / 8)), 0, (gameCanvas.width / 8), (gameCanvas.height), 0, "./media/Ferry-building.png")
 let alcatraz = new EscapeGame("alcatraz", 0, (gameCanvas.height / 4), (gameCanvas.width / (13/2)), (gameCanvas.height / 2), 0, "./media/AlcatrazImage.png")
 let fugative = new EscapeGame("fugative", (gameCanvas.width / (13/2)), (gameCanvas.height / 2), (gameCanvas.width / 12), (gameCanvas.height / 12), (gameCanvas.width / 300), "./media/fugative.png");
-let police1 = new EscapeGame("police1", (gameCanvas.width / 3), (gameCanvas.height / 3), (gameCanvas.width / 7), (gameCanvas.height / 6), (gameCanvas.height / 12), "./media/police-boat1.png");
+let police1 = new EscapeGame("police1", (gameCanvas.width / 3), (gameCanvas.height / 4), (gameCanvas.width / 7), (gameCanvas.height / 6), (gameCanvas.height / 12), "./media/police-boat1.png");
 let police2 = new EscapeGame("police2", (gameCanvas.width / 2), (gameCanvas.height - (gameCanvas.height / 4)), (gameCanvas.width / 7), (gameCanvas.height / 6), (gameCanvas.height / 12), "./media/police-boat2.png");
 let policeheli = new EscapeGame("policeheli", (gameCanvas.width - (gameCanvas.width / 4)), (gameCanvas.height / 4), (gameCanvas.width / 7), (gameCanvas.height / 3), (gameCanvas.height / 10), "./media/police-heli.png");
 
 // OBSTACLE MOVEMENT & OBSTACLE DETECTION 
 function fugativeSearch () {
     police1.obstacleMovement(police1, police2);
+    police1.obstacleMovement(police1, policeheli);
     police2.obstacleMovement(police2, police1);
+    police2.obstacleMovement(police2, policeheli);
     policeheli.obstacleMovement(policeheli, police1);
     policeheli.obstacleMovement(policeheli, police2);
 }
@@ -180,10 +181,10 @@ function obstacleCollision (objectA, objectB) {
 }
     
 function inBoundsDetection (objectA) {
-    let leftBounds = objectA.x >= (gameCanvas.width / (13/2));
-    let rightBounds = objectA.x + objectA.width <= gameCanvas.width - freeLand.width;
-    let topBounds = objectA.y >= 0;
-    let bottomBounds = (objectA.y <= gameCanvas.height - objectA.height);
+    let leftBounds = objectA.x >= (alcatraz.width + (objectA.width / 3));
+    let rightBounds = objectA.x + objectA.width <= (gameCanvas.width - freeLand.width + 1);
+    let topBounds = objectA.y >= 1;
+    let bottomBounds = (objectA.y <= (gameCanvas.height - (objectA.height + 1)));
     if (leftBounds && rightBounds && topBounds && bottomBounds) {
         return true;
     } 
@@ -191,10 +192,10 @@ function inBoundsDetection (objectA) {
 }
 
 function borderAvoid(objectA) {
-    let leftBounds = objectA.x <= (gameCanvas.width / (13/2));
-    let rightBounds = objectA.x + objectA.width >= gameCanvas.width - freeLand.width;
-    let topBounds = objectA.y <= 0;
-    let bottomBounds = (objectA.y >= gameCanvas.height - objectA.height);
+    let leftBounds = objectA.x <= (alcatraz.width + (objectA.width / 3));
+    let rightBounds = objectA.x + objectA.width >= (gameCanvas.width - freeLand.width + 1);
+    let topBounds = objectA.y <= 1;
+    let bottomBounds = (objectA.y >= gameCanvas.height - (objectA.height + 1));
     if (leftBounds === false && rightBounds === true && topBounds === false && bottomBounds === false) {
         objectA.x -= objectA.speed;
     } else if (leftBounds === true && rightBounds === false && topBounds === false && bottomBounds === false) {
@@ -304,16 +305,16 @@ function detectCommentary () {
     let quarterLeft = fugative.x + fugative.width >= (gameCanvas.width / (4/3));
     if (quarterSwam === true && halfway === false && quarterLeft === false) {
         if (closeToPolice(police1) === true || closeToPolice(police2) === true) {
-            gameCommentary.innerText = `"The coppers are on me!"`;
+            gameCommentary.innerText = `"I don't want to go back to the Rock!"`;
         } 
         else {
-            gameCommentary.innerText = `"This bay is saltier than toilet wine!"`;}
+            gameCommentary.innerText = `"I've got a ways to go!"`;}
     }
     else if (halfway === true && quarterLeft === false) {
         if (closeToPolice(police1) === true || closeToPolice(police2) === true) {
-            gameCommentary.innerText = `"I don't want to go back to the Rock!"`;
+            gameCommentary.innerText = `"The coppers are on me!"`;
         } else if (closeToPolice(policeheli) === true) {
-            gameCommentary.innerText = `"Who called the heli?!"`;
+            gameCommentary.innerText = `"Shoot did the heli see me?"`;
         }
         else {gameCommentary.innerText = `"I didn't think I'd make it this far!"`}
     }
@@ -321,7 +322,7 @@ function detectCommentary () {
         if (closeToPolice(police1) === true || closeToPolice(police2) === true) {
             gameCommentary.innerText = `"I've swam too far to get caught now!"`;
         } else if (closeToPolice(policeheli) === true) {
-            gameCommentary.innerText = `"Am I on TV?!"`;
+            gameCommentary.innerText = `"This chopper is all over me!"`;
         }
         else {gameCommentary.innerText = `"I think I'm going to make it!"`}
     }
@@ -336,7 +337,7 @@ function winner () {
     clearInterval(commentaryLoop);
     gameStatusHeader.innerText = "You got away!"
     gameDistance.innerText = "Escape again?";
-    gameCommentary.innerText = `"Where's the driver in that car?!"`
+    gameCommentary.innerText = `"The only thing I'll miss about Alcatraz is the view."`
 }
 function caughtFugative() {
     gameOn = false;
@@ -369,7 +370,7 @@ function gameResetFunction () {
     freeLand = new EscapeGame ("freeLand", (gameCanvas.width - (gameCanvas.width / 8)), 0, (gameCanvas.width / 8), (gameCanvas.height), 0, "./media/Ferry-building.png")
     alcatraz = new EscapeGame("alcatraz", 0, (gameCanvas.height / 4), (gameCanvas.width / (13/2)), (gameCanvas.height / 2), 0, "./media/AlcatrazImage.png")
     fugative = new EscapeGame("fugative", (gameCanvas.width / (13/2)), (gameCanvas.height / 2), (gameCanvas.width / 12), (gameCanvas.height / 12), (gameCanvas.width / 300), "./media/fugative.png");
-    police1 = new EscapeGame("police1", (gameCanvas.width / 3), (gameCanvas.height / 3), (gameCanvas.width / 7), (gameCanvas.height / 6), (gameCanvas.height / 12), "./media/police-boat1.png");
+    police1 = new EscapeGame("police1", (gameCanvas.width / 3), (gameCanvas.height / 4), (gameCanvas.width / 7), (gameCanvas.height / 6), (gameCanvas.height / 12), "./media/police-boat1.png");
     police2 = new EscapeGame("police2", (gameCanvas.width / 2), (gameCanvas.height - (gameCanvas.height / 4)), (gameCanvas.width / 7), (gameCanvas.height / 6), (gameCanvas.height / 12), "./media/police-boat2.png");
     policeheli = new EscapeGame("policeheli", (gameCanvas.width - (gameCanvas.width / 4)), (gameCanvas.height / 4), (gameCanvas.width / 7), (gameCanvas.height / 3), (gameCanvas.height / 10), "./media/police-heli.png");
     clearInterval(gameLoopInterval);
