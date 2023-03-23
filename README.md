@@ -2,6 +2,8 @@
 
 You just busted out of Alcatraz Prison and only a swim across the San Francisco Bay separates you from freedom! Be careful though, you could be spotted by the cops.
 
+**Link:** https://andrewbantly.github.io/Escape-From-Alcatraz/
+
 ## About the Game 
 To escape from Alcatraz, the player will have a top-down view of their swim across the San Francisco Bay. After the player clicks ``` start game ```, the player will be in the water and have the opportunity to swim forwards, backwards, right, and left. The player needs to avoid the police in order to win the game.
 
