@@ -1,3 +1,6 @@
+html {
+    font-size: 1.5vw;
+}
 body {
     background-color: rgb(67, 67, 67);
     margin: 0;
@@ -11,26 +14,10 @@ body {
     background-position: center center;
     background-attachment: fixed;
 } 
-.homeHeader {
-    width: 70%;
-    height: 10vh;
-    margin: 2vh auto;
-    display: flex;
-}
-.homeHeader {
-    justify-content: center;
-}
-/* h1 {
-    text-align: center;
-    font-size: 5rem;
-    position: relative;
-    margin: 0 auto 5vh;
-    padding: 0;
-} */
 .gameHeader {
     box-sizing: border-box;
     width: 70%;
-    margin: 3vh auto 1vh;
+    margin: 8vh auto 1vh;
     display: flex;
     height: 9vh;
     justify-content: space-between;
@@ -52,6 +39,7 @@ body {
     margin: 0;
     height: 33%;
     font-size: 1.5rem; 
+    text-align: end; 
 }
 .gameStatusData {
     margin: 0;
@@ -67,6 +55,7 @@ main {
 }
 .gameContainer {
     width: 100%;
+    height: 23.5rem;
     position: relative;
     justify-content: center;
     background-size: cover;
@@ -77,16 +66,16 @@ main {
     background-image: url(./media/Water.jpg);
     background-size: cover;
     border: 3px solid lightgray;
+    border-radius: 0.2rem;
 }
 .alcatrazPhoto {
     max-width: 100%;
     position: absolute;
     border: 3px solid lightgray;
+    border-radius: 0.2rem;
 }
 .gameMenu {
     width: 100%;
-    top: 0%;
-    margin: 0 auto;
     position: relative;
     display: flex;
     justify-content: center;
@@ -94,6 +83,7 @@ main {
 }
 .gameObjectiveDiv {
     width: 100%;
+    height: 10rem;
     display: flex;
     justify-content: center;
 }
@@ -103,13 +93,20 @@ main {
     width: 80%;
     font-size: 1.3rem;
     text-align: center;
-    margin: 5vh auto 0;
+    margin: 1rem auto 0;
+}
+.homePageSpacer {
+    box-sizing: border-box;
+    margin: 1rem auto;
+    width: 100%;
+    height: 3rem;
+    position: relative;
 }
 .gameFooter {
     box-sizing: border-box;
-    margin: 1vh auto;
+    margin: 1rem auto;
     width: 100%;
-    height: 10vh;
+    height: 3rem;
     justify-content: space-between;
     align-items: center;
     display: flex;
@@ -133,21 +130,21 @@ main {
     background-color: rgba(0, 0, 0, 1);
     color: rgb(255, 250, 243); 
     font-family: 'Stardos Stencil', cursive, sans-serif;
+    border: 0.1rem solid rgb(67, 67, 67);
+    border-radius: 0.2rem;
+    height: 2rem;
+    padding: 0.2rem;
 }
 .startButton {
-    height: 30%;
-    margin: 18vh auto;
+    margin: 4rem auto 0;
 }
 .startButton:hover, .gameReset:hover, .goHome:hover {
     cursor: pointer;
 }
 .gameReset {
-    position: relative;
-    height: 50%;
     margin: 0;
 }
 .gameCommentary {
-    /* border: 3px solid lightgray; */
     font-size: 1.3rem;
     margin: 0;
     padding: 1rem 0;
@@ -155,7 +152,6 @@ main {
     font-style: italic;
 }
 footer {
-    border: 3px solid hotpink;
     width: 70%;
     margin: 0 auto;
 }

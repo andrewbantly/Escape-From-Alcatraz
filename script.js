@@ -5,6 +5,7 @@ const alcatrazPhoto = document.querySelector("#alcatrazPhoto");
 const gameHeader = document.querySelector("#gameHeader");
 const main = document.querySelector("main");
 const gameMenu = document.querySelector("#gameMenu");
+const homepageSpacer = document.querySelector("#homePageSpacer");
 
 // GAME START BUTTON
 startButton.addEventListener("click", gameStart);
@@ -14,6 +15,7 @@ function gameStart () {
 // REMOVE ELEMENTS
 alcatrazPhoto.remove();
 gameMenu.remove();
+homepageSpacer.remove();
 
 // CREATE ELEMENTS
 const gameCanvas = document.createElement("canvas");
@@ -74,6 +76,7 @@ gameCanvas.setAttribute("width", getComputedStyle(canvas).width);
 function onLoad () {
 gameDistance.innerText = `${(gameCanvas.width - (fugative.x + freeLand.width + 50).toFixed(0))}`;
 clearInterval(pageLoad)
+console.log(`width: ${gameCanvas.width} height: ${gameCanvas.height}`)
 }
 let pageLoad = setInterval(onLoad, 1);
 
@@ -150,21 +153,19 @@ class EscapeGame {
 }
 
 // GAME OBJECTS
-let freeLand = new EscapeGame ("freeLand", (gameCanvas.width - 100), 0, 100, (gameCanvas.height), 0, "./media/Ferry-building.png")
+let freeLand = new EscapeGame ("freeLand", (gameCanvas.width - (gameCanvas.width / 8)), 0, (gameCanvas.width / 8), (gameCanvas.height), 0, "./media/Ferry-building.png")
 let alcatraz = new EscapeGame("alcatraz", 0, (gameCanvas.height / 4), (gameCanvas.width / (13/2)), (gameCanvas.height / 2), 0, "./media/AlcatrazImage.png")
-let fugative = new EscapeGame("fugative", (gameCanvas.width / (13/2)), (gameCanvas.height / 2), 56, 23, 2, "./media/fugative.png");
-let police1 = new EscapeGame("police1", (gameCanvas.width / 3), (gameCanvas.height / 3), 100, 75, 10, "./media/police-boat1.png");
-let police2 = new EscapeGame("police2", (gameCanvas.width / 2), (gameCanvas.height - (gameCanvas.height / 4)), 100, 75, 10, "./media/police-boat2.png");
-let policeheli = new EscapeGame("policeheli", (gameCanvas.width - (gameCanvas.width / 4)), gameCanvas.height / 2, 100, 125, 30, "./media/police-heli.png");
-// let police3 = new EscapeGame("police3", (gameCanvas.width - (gameCanvas.width / 4)), (gameCanvas.height / 5), 75, 100, "./media/police-boat3.png");
-let dummyObstacle = new EscapeGame("dummyObstacle", -10, -10, 0, 0, 0, "./media/police-heli.png")
+let fugative = new EscapeGame("fugative", (gameCanvas.width / (13/2)), (gameCanvas.height / 2), (gameCanvas.width / 12), (gameCanvas.height / 12), 2, "./media/fugative.png");
+let police1 = new EscapeGame("police1", (gameCanvas.width / 3), (gameCanvas.height / 3), (gameCanvas.width / 7), (gameCanvas.height / 6), 10, "./media/police-boat1.png");
+let police2 = new EscapeGame("police2", (gameCanvas.width / 2), (gameCanvas.height - (gameCanvas.height / 4)), (gameCanvas.width / 7), (gameCanvas.height / 6), 10, "./media/police-boat2.png");
+let policeheli = new EscapeGame("policeheli", (gameCanvas.width - (gameCanvas.width / 4)), (gameCanvas.height / 4), (gameCanvas.width / 7), (gameCanvas.height / 3), 30, "./media/police-heli.png");
 
 // OBSTACLE MOVEMENT & OBSTACLE DETECTION 
 function fugativeSearch () {
     police1.obstacleMovement(police1, police2);
     police2.obstacleMovement(police2, police1);
-    policeheli.obstacleMovement(policeheli, dummyObstacle);
-    // police3.obstacleMovement(police3, police1, police2);
+    policeheli.obstacleMovement(policeheli, police1);
+    policeheli.obstacleMovement(policeheli, police2);
 }
 
 function obstacleCollision (objectA, objectB) {
@@ -271,7 +272,6 @@ function gameLoop () {
         police1.render();
         police2.render();
         policeheli.render();
-        // police3.render();
     } else if (fugative.atLarge === true && fugative.aFreePerson === true) {
         winner();
     } else {
@@ -355,8 +355,8 @@ function caughtFugative() {
     policeheli.render();
     clearInterval(commentaryLoop);
     gameCommentary.innerText = `"Aw shucks back to solitary confinement for me."`;
-    gameStatusHeader.innerText = "You've been caught by the police!";
-    gameDistance.innerText = "Try to escape again?";
+    gameStatusHeader.innerText = "You've been caught!";
+    gameDistance.innerText = "Escape again?";
 }
 
 // GAME RESET LOGIC
