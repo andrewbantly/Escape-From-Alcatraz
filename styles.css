@@ -154,6 +154,13 @@ main {
 footer {
     width: 70%;
     margin: 0 auto;
+    display: flex;
+    flex-direction: row;
+    color: rgb(255, 250, 243);
 }
-
+footer > a {
+    text-decoration: none;
+    margin-left: 1rem;
+    color: rgb(209, 209, 209);
+}
 
