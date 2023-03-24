@@ -1,6 +1,6 @@
 # Escape From Alcatraz
 
-You just busted out of Alcatraz Prison and only a swim across the San Francisco Bay separates you from freedom! Be careful though, you could be spotted by the cops.
+You just busted out of Alcatraz Prison and only a swim across the San Francisco Bay separates you from freedom! Be careful though, the police are desperately looking for you.
 
 **Link:** https://andrewbantly.github.io/Escape-From-Alcatraz/
 
