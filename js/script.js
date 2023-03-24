@@ -10,7 +10,7 @@ const homepageSpacer = document.querySelector("#homePageSpacer");
 // GAME START BUTTON
 startButton.addEventListener("click", gameStart);
 function gameStart () {
-    let gameOn = true;
+let gameOn = true;
     
 // REMOVE ELEMENTS
 alcatrazPhoto.remove();
@@ -94,28 +94,28 @@ class EscapeGame {
         this.atLarge = true;
     }
 // COLLISION DETECTION FUNCTION FOR ALL OBSTACLES
-        detectHit () {
-            // invoke police boats and future obstacles here
-            const left = this.x <= fugative.width + fugative.x;
-            const right = this.x + this.width >= fugative.x;
-            const top = this.y <= fugative.y + fugative.height;
-            const bottom = this.y + this.height >= fugative.y;
-            if (left && top && bottom && right) {
-                fugative.atLarge = false;
-                clearInterval(gameLoopInterval);
-                clearInterval(searchLoop);
-            }
+    detectHit () {
+        // invoke police boats and future obstacles here
+        const left = this.x <= fugative.width + fugative.x;
+        const right = this.x + this.width >= fugative.x;
+        const top = this.y <= fugative.y + fugative.height;
+        const bottom = this.y + this.height >= fugative.y;
+        if (left && top && bottom && right) {
+            fugative.atLarge = false;
+            clearInterval(gameLoopInterval);
+            clearInterval(searchLoop);
         }
+    }
 // WIN DETECTION
-        detectWin() {
-            const left = this.x <= fugative.width + fugative.x; 
-            if (left) {
-                fugative.aFreePerson = true;
-                fugative.atLarge = true;
-                clearInterval(gameLoopInterval);
-                clearInterval(searchLoop);
-            }
+    detectWin() {
+        const left = this.x <= fugative.width + fugative.x; 
+        if (left) {
+            fugative.aFreePerson = true;
+            fugative.atLarge = true;
+            clearInterval(gameLoopInterval);
+            clearInterval(searchLoop);
         }
+    }
 // OBSTACLE MOVEMENT 
     obstacleMovement (objectA, objectB) {
         if (inBoundsDetection(objectA) === true) {
@@ -217,15 +217,15 @@ function keyPressEvent(e) {
     if (gameOn === true) {
     switch(e.key) {
         case "w":
-            case "ArrowUp":
-                if ((fugative.y >= 0) && (fugative.x >= (gameCanvas.width / (13/2)))) {
-                    fugative.y -= fugative.speed;
-                 } else if ((fugative.y <= (gameCanvas.height / 4)) && (fugative.y >= 0)) {
-                    fugative.y -= fugative.speed;
-                 } else if (fugative.y >= ((gameCanvas.height) - (gameCanvas.height / 4))) {
-                    fugative.y -= fugative.speed;
-                 }
-                 break
+        case "ArrowUp":
+            if ((fugative.y >= 0) && (fugative.x >= (gameCanvas.width / (13/2)))) {
+                fugative.y -= fugative.speed;
+                } else if ((fugative.y <= (gameCanvas.height / 4)) && (fugative.y >= 0)) {
+                fugative.y -= fugative.speed;
+                } else if (fugative.y >= ((gameCanvas.height) - (gameCanvas.height / 4))) {
+                fugative.y -= fugative.speed;
+                }
+                break
             case "s":
             case "ArrowDown": 
                 if ((fugative.y <= gameCanvas.height - fugative.height) && (fugative.x >= (gameCanvas.width / (13/2)))) {
@@ -252,8 +252,8 @@ function keyPressEvent(e) {
                      fugative.x += fugative.speed;
                 } break;
             }
-    gameDistance.innerText = `${(gameCanvas.width - (fugative.x + fugative.width + freeLand.width).toFixed(0))}`;
-    } 
+        gameDistance.innerText = `${(gameCanvas.width - (fugative.x + fugative.width + freeLand.width).toFixed(0))}`;
+        } 
 }
 document.addEventListener("keydown", keyPressEvent);
 
