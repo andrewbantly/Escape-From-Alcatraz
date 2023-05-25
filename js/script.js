@@ -1,3 +1,8 @@
+// GAME OBJECTS ARRAY
+let gameObjects = [];
+let policeObjects = [];
+
+
 // DOM SELECTORS
 const startButton = document.querySelector("#startButton");
 const gameContainer = document.querySelector("#gameContainer");
@@ -117,9 +122,22 @@ class EscapeGame {
         }
     }
 // OBSTACLE MOVEMENT 
-    obstacleMovement (objectA, objectB) {
-        if (inBoundsDetection(objectA) === true) {
-            let randomDirection = Math.floor(Math.random() * 4);
+    obstacleMovement () {
+        let randomDirection = Math.floor(Math.random() * 4);
+        if (randomDirection === 0) {
+            this.x += this.speed;
+        }
+        for (let i = 0; i < policeObjects.length; i++) {
+            if (policeObjects[i] === this) {
+                continue
+            } 
+            if (obstacleCollision (object) === true) {
+                this.x -= this.speed;
+            }
+    }}
+
+
+        if (inBoundsDetection() === true) {
             if (randomDirection === 0) {
                     this.x += this.speed;
                 if (obstacleCollision (objectA, objectB) === true) {
@@ -153,20 +171,25 @@ class EscapeGame {
 
 // GAME OBJECTS
 let freeLand = new EscapeGame ("freeLand", (gameCanvas.width - (gameCanvas.width / 8)), 0, (gameCanvas.width / 8), (gameCanvas.height), 0, "./media/Ferry-building.png")
-let alcatraz = new EscapeGame("alcatraz", 0, (gameCanvas.height / 4), (gameCanvas.width / (13/2)), (gameCanvas.height / 2), 0, "./media/AlcatrazImage.png")
-let fugative = new EscapeGame("fugative", (gameCanvas.width / (13/2)), (gameCanvas.height / 2), (gameCanvas.width / 12), (gameCanvas.height / 12), (gameCanvas.width / 300), "./media/fugative.png");
-let police1 = new EscapeGame("police1", (gameCanvas.width / 3), (gameCanvas.height / 4), (gameCanvas.width / 7), (gameCanvas.height / 6), (gameCanvas.height / 12), "./media/police-boat1.png");
-let police2 = new EscapeGame("police2", (gameCanvas.width / 2), (gameCanvas.height - (gameCanvas.height / 4)), (gameCanvas.width / 7), (gameCanvas.height / 6), (gameCanvas.height / 12), "./media/police-boat2.png");
-let policeheli = new EscapeGame("policeheli", (gameCanvas.width - (gameCanvas.width / 4)), (gameCanvas.height / 4), (gameCanvas.width / 7), (gameCanvas.height / 3), (gameCanvas.height / 10), "./media/police-heli.png");
+alcatraz = new EscapeGame("alcatraz", 0, (gameCanvas.height / 4), (gameCanvas.width / (13/2)), (gameCanvas.height / 2), 0, "./media/AlcatrazImage.png")
+fugative = new EscapeGame("fugative", (gameCanvas.width / (13/2)), (gameCanvas.height / 2), (gameCanvas.width / 12), (gameCanvas.height / 12), (gameCanvas.width / 300), "./media/fugative.png"),
+police1 = new EscapeGame("police1", (gameCanvas.width / 3), (gameCanvas.height / 4), (gameCanvas.width / 7), (gameCanvas.height / 6), (gameCanvas.height / 12), "./media/police-boat1.png"),
+police2 = new EscapeGame("police2", (gameCanvas.width / 2), (gameCanvas.height - (gameCanvas.height / 4)), (gameCanvas.width / 7), (gameCanvas.height / 6), (gameCanvas.height / 12), "./media/police-boat2.png"),
+policeheli = new EscapeGame("policeheli", (gameCanvas.width - (gameCanvas.width / 4)), (gameCanvas.height / 4), (gameCanvas.width / 7), (gameCanvas.height / 3), (gameCanvas.height / 10), "./media/police-heli.png"),
+
+policeObjects.push(police1, police2, policeheli);
+gameObjects.push(alcatraz, freeLand, fugative);
+
 
 // OBSTACLE MOVEMENT & OBSTACLE DETECTION 
 function fugativeSearch () {
-    police1.obstacleMovement(police1, police2);
-    police1.obstacleMovement(police1, policeheli);
-    police2.obstacleMovement(police2, police1);
-    police2.obstacleMovement(police2, policeheli);
-    policeheli.obstacleMovement(policeheli, police1);
-    policeheli.obstacleMovement(policeheli, police2);
+    police1.obstacleMovement();
+    // police1.obstacleMovement(police1, police2);
+    // police1.obstacleMovement(police1, policeheli);
+    // police2.obstacleMovement(police2, police1);
+    // police2.obstacleMovement(police2, policeheli);
+    // policeheli.obstacleMovement(policeheli, police1);
+    // policeheli.obstacleMovement(policeheli, police2);
 }
 
 function obstacleCollision (objectA, objectB) {
